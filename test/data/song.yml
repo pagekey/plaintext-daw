@@ -1,0 +1,14 @@
+piano:
+  type: instrument
+  path: piano.sft # sound font
+pattern1:
+  type: pattern
+  notes: [a,b,c,d]
+  instrument: piano
+song:
+  type: song
+  output: 'song.wav'
+  patterns:
+    - name: pattern1
+      start: 1 # start measure
+      repeat: 0 # how many copies after the original one
