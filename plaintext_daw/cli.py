@@ -3,7 +3,7 @@ import sys
 
 import yaml
 
-from plaintext_daw.models import Song
+from plaintext_daw.models import Instrument, Note, Pattern, Sample, Song
 
 
 def print_usage():
@@ -20,6 +20,16 @@ def cli_entry_point():
             raw_yaml = f.read()
         config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
         song = Song(**config['song'])
-        print(song)
+        # Hydrate
+        song.samples = [Sample(**x) for x in song.samples]
+        song.instruments = {key: Instrument(**value) for key, value in song.instruments.items()}
+        song.patterns = [Pattern(**x) for x in song.patterns]
+        for pattern in song.patterns:
+            pattern.instrument = song.instruments[pattern.instrument]
+            pattern.notes = [Note(**x) for x in pattern.notes]
+        # Process notes
+        for pattern in song.patterns:
+            for note in pattern.notes:
+                print("On note:",note,pattern.instrument)
     else:
         print_usage()

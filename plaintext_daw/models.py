@@ -1,34 +1,38 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict
 
 
 @dataclass
 class Note:
-    type: str
     value: str
     length: int
 
 @dataclass
+class Sample:
+    path: str
+
+@dataclass
 class Instrument:
-    type: str
+    samples: Dict[str, Sample]
 
 @dataclass
 class Pattern:
-    type: str
+    name: str
     instrument: Instrument
     notes: List[Note]
+    start: int
+    repeat: int
 
 @dataclass
 class Sample:
-    type: str
     path: str
     start: int
 
 @dataclass
 class Song:
-    type: str
     output: str
     bpm: int
     sample_rate: int
     samples: List[Sample]
+    instruments: List[Instrument]
     patterns: List[Pattern]

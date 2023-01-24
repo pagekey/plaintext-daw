@@ -1,27 +1,24 @@
-piano:
-  type: instrument
-  samples:
-    a:
-      path: piano/PianoA5.ogg.wav
-    c:
-      path: piano/Piano-C5.ogg.wav
-pattern1:
-  type: pattern
-  instrument: piano
-  notes:
-    - value: a
-      length: 1
-    - value: b
-      length: 2
 song:
-  type: song
   output: 'song.wav'
   bpm: 100
   sample_rate: 44100
   samples:
     - path: voice/clip1.wav
       start: 2 # start on measure 2
+  instruments:
+    piano:
+      samples:
+        a:
+          path: piano/PianoA5.ogg.wav
+        c:
+          path: piano/Piano-C5.ogg.wav
   patterns:
     - name: pattern1
       start: 1 # start measure
       repeat: 0 # how many copies after the original one
+      instrument: piano
+      notes:
+        - value: a
+          length: 1
+        - value: b
+          length: 2
