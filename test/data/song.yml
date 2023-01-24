@@ -1,13 +1,26 @@
 piano:
   type: instrument
-  path: piano.sft # sound font
+  samples:
+    a:
+      path: piano/a.wav
+    b:
+      path: piano/b.wav
 pattern1:
   type: pattern
-  notes: [a,b,c,d]
   instrument: piano
+  notes:
+	- value: a
+	  length: 1
+	- value: b
+	  length: 2
 song:
   type: song
   output: 'song.wav'
+  bpm: 100
+  sample_rate: 44100
+  samples:
+    - path: voice/clip1.wav
+      start: 2 # start on measure 2
   patterns:
     - name: pattern1
       start: 1 # start measure
