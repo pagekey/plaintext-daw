@@ -10,7 +10,7 @@
 		{"id":"04483880b8342513","x":-1464,"y":911,"width":437,"height":97,"type":"text","text":"Let's change music FOREVER - Coding a Plaintext DAW"},
 		{"id":"8d9a958a31edd992","x":-1491,"y":21,"width":368,"height":97,"type":"text","text":"MVP2: Include another wav file to \"superimpose\""},
 		{"id":"79e61c584d4fbdbf","x":-1491,"y":143,"width":250,"height":60,"type":"text","text":"Units:\nbpm, start_measure"},
-		{"id":"17371842b33f5819","x":1934,"y":1290,"width":250,"height":60,"type":"text","text":"Find or create a free piano wav of a note"},
+		{"id":"17371842b33f5819","x":1934,"y":1290,"width":250,"height":60,"color":"4","type":"text","text":"Find or create a free piano wav of a note"},
 		{"id":"f111c3234e50cc64","x":-1511,"y":-530,"width":1155,"height":1583,"type":"group","label":"Video 1"},
 		{"id":"ec609f5709a5610f","x":-724,"y":-41,"width":317,"height":109,"type":"text","text":"Cross-reference pattern, instrument to create one huge song obj"},
 		{"id":"437ac2564937cf34","x":-1083,"y":-96,"width":275,"height":110,"type":"text","text":"Do all on video\n(or do all coding on vid?)\n(do planning offline?)"},

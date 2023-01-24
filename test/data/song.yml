@@ -2,17 +2,17 @@ piano:
   type: instrument
   samples:
     a:
-      path: piano/a.wav
-    b:
-      path: piano/b.wav
+      path: piano/PianoA5.ogg.wav
+    c:
+      path: piano/Piano-C5.ogg.wav
 pattern1:
   type: pattern
   instrument: piano
   notes:
-	- value: a
-	  length: 1
-	- value: b
-	  length: 2
+    - value: a
+      length: 1
+    - value: b
+      length: 2
 song:
   type: song
   output: 'song.wav'

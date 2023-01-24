@@ -3,6 +3,8 @@ import sys
 
 import yaml
 
+from plaintext_daw.models import Song
+
 
 def print_usage():
     print("Usage:")
@@ -17,6 +19,7 @@ def cli_entry_point():
         with open(file_path, 'r') as f:
             raw_yaml = f.read()
         config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
-        print(config)
+        song = Song(**config['song'])
+        print(song)
     else:
         print_usage()
