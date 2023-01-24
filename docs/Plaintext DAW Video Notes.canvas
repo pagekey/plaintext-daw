@@ -33,7 +33,7 @@
 		{"id":"c678a92285ed884c","x":1202,"y":1260,"width":1323,"height":261,"type":"group","label":"Next Actions"},
 		{"id":"e0d9a85052b31d6e","x":1223,"y":1441,"width":250,"height":60,"type":"text","text":"Write a single note, config or not, to wav"},
 		{"id":"2b67b2ed79332ec9","x":1590,"y":1441,"width":250,"height":60,"type":"text","text":"Write two notes"},
-		{"id":"373598f559ef4b2f","x":1631,"y":1290,"width":250,"height":60,"type":"text","text":"Paste/commit new config"},
+		{"id":"373598f559ef4b2f","x":1631,"y":1290,"width":250,"height":60,"color":"4","type":"text","text":"Paste/commit new config"},
 		{"id":"2fb873535bd2a98c","x":1223,"y":1289,"width":367,"height":63,"color":"4","type":"text","text":"Add this canvas to `docs` folder in repo\nMake `docs` an Obsidian vault"},
 		{"id":"5a0c55e51c389cd2","x":1197,"y":1083,"width":334,"height":117,"type":"text","text":"Future Idea 💡\nTrack for \"performance\"\nAuto-increment \"takes\""},
 		{"id":"2c3e388e09936399","x":1177,"y":-331,"width":1191,"height":621,"type":"group","label":"Research"},
@@ -46,7 +46,11 @@
 		{"id":"7fc6065585b8e681","x":1197,"y":-605,"width":600,"height":68,"type":"text","text":"# Coding a Plaintext DAW 2"},
 		{"id":"cbef6cc833750af4","x":1197,"y":-519,"width":326,"height":60,"type":"text","text":"## Where we left off"},
 		{"id":"faffa43a56b5f9f6","x":1197,"y":-459,"width":326,"height":60,"type":"text","text":"Working CLI + some fancy ideas"},
-		{"id":"e71a84d7c1f521f3","x":1197,"y":173,"width":287,"height":85,"type":"text","text":"- Lets you load soundfonts\n- Coupled with `musicpy`"}
+		{"id":"e71a84d7c1f521f3","x":1197,"y":173,"width":287,"height":85,"type":"text","text":"- Lets you load soundfonts\n- Coupled with `musicpy`"},
+		{"id":"26f74fa0f4443bd0","x":1207,"y":1584,"width":250,"height":60,"type":"text","text":"Finding Piano Samples"},
+		{"id":"3ca742579f4b4b40","x":1207,"y":1644,"width":400,"height":400,"type":"link","url":"https://musical-artifacts.com/artifacts/403"},
+		{"id":"d4bdad58d4751eb7","x":1607,"y":1644,"width":400,"height":400,"type":"link","url":"https://creativecommons.org/licenses/by/4.0/deed.en"},
+		{"id":"e3566be71e053160","x":1207,"y":2044,"width":625,"height":50,"type":"text","text":"Maybe eventually: can use [Soundfile](https://pypi.org/project/soundfile/) lib in Python for .ogg files"}
 	],
 	"edges":[
 		{"id":"0a70142f830f7f2d","fromNode":"2a6cb8499d14a644","fromSide":"bottom","toNode":"ec609f5709a5610f","toSide":"top"},
