@@ -1,0 +1,28 @@
+{
+	"nodes":[
+		{"id":"0e422a581a8c334e","x":219,"y":-661,"width":304,"height":86,"color":"4","type":"text","text":"First step:\nCreate git repo w/ README"},
+		{"id":"83d973163995c7ae","x":-555,"y":-769,"width":600,"height":68,"type":"text","text":"# Coding a Plaintext DAW"},
+		{"id":"f784c3788fb0e53b","x":-555,"y":-701,"width":250,"height":60,"type":"text","text":"Name: `plaintext-daw`\nCan always rename later"},
+		{"id":"52e1f78ede44f64c","x":-147,"y":-355,"width":275,"height":110,"type":"text","text":"Do all on video\n(or do all coding on vid?)\n(do planning offline?)"},
+		{"id":"3fb86b52e13e938c","x":-555,"y":-17,"width":711,"height":429,"type":"text","text":"MVP music file:\n```yaml\npiano:\n  type: instrument\n  path: piano.sft # sound font\npattern1:\n  type: pattern\n  notes: [a,b,c,d]\n  instrument: piano\nsong:\n  type: song\n  output: 'song.wav'\n  patterns:\n    - name: pattern1\n      start: 1 # start measure\n      repeat: 0 # how many copies after the original one\n```"},
+		{"id":"e09aa969a206ae78","x":-555,"y":-624,"width":600,"height":248,"color":"3","type":"text","text":"**Main Idea**:\n- use plain text as your music creation format\n\nImplications:\n- Can use Git to collab / develop music just like code\n- Artists can \"open source\" their song\n- People can \"fork\" to cover / remix"},
+		{"id":"46a58ca5b57891f0","x":-555,"y":-238,"width":368,"height":97,"type":"text","text":"MVP2: Include another wav file to \"superimpose\""},
+		{"id":"b5941cfcfaff4856","x":-555,"y":-371,"width":357,"height":116,"type":"text","text":"MVP: render ANY wav from plaintext notes + MIDI instrument"},
+		{"id":"10b3120bf715c66c","x":-555,"y":-116,"width":250,"height":60,"type":"text","text":"Units:\nbpm, start_measure"},
+		{"id":"45b710e9d5d806be","x":219,"y":-125,"width":303,"height":94,"type":"text","text":"Research soundfonts, midi instruments - how to render a note to wav?"},
+		{"id":"a734baa5b20f489d","x":246,"y":-531,"width":250,"height":82,"color":"4","type":"text","text":"Add CLI command\nprint hello world\n`plaintext-daw`"},
+		{"id":"0b20e0de84c4b579","x":246,"y":-406,"width":250,"height":60,"color":"4","type":"text","text":"Parse sample yaml to dict"},
+		{"id":"e30bba146f5adb40","x":212,"y":-300,"width":317,"height":109,"type":"text","text":"Cross-reference pattern, instrument to create one huge song obj"},
+		{"id":"68ecce3fae3cef06","x":199,"y":-685,"width":357,"height":677,"type":"group","label":"First Steps"},
+		{"id":"521e1e553cc2aee2","x":-548,"y":482,"width":477,"height":287,"type":"group","label":"Title Ideas"},
+		{"id":"5a9c4c77cba06487","x":-528,"y":502,"width":395,"height":65,"type":"text","text":"Plaintext DAW: Why it could change EVERYTHING about music"},
+		{"id":"495e4dae685e2c8b","x":-528,"y":580,"width":425,"height":72,"type":"text","text":"Building a Plaintext DAW to Change Music FOREVER"},
+		{"id":"2d0733b671fafbb7","x":-528,"y":652,"width":437,"height":97,"type":"text","text":"Let's change music FOREVER - Coding a Plaintext DAW"}
+	],
+	"edges":[
+		{"id":"b9a8f127af4b26b5","fromNode":"0e422a581a8c334e","fromSide":"bottom","toNode":"a734baa5b20f489d","toSide":"top"},
+		{"id":"74288a9f28afc6b6","fromNode":"e30bba146f5adb40","fromSide":"bottom","toNode":"45b710e9d5d806be","toSide":"top"},
+		{"id":"7380912a1acbcf42","fromNode":"a734baa5b20f489d","fromSide":"bottom","toNode":"0b20e0de84c4b579","toSide":"top"},
+		{"id":"3c5f46aa1b74c6a8","fromNode":"0b20e0de84c4b579","fromSide":"bottom","toNode":"e30bba146f5adb40","toSide":"top"}
+	]
+}

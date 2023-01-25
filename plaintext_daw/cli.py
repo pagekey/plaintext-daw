@@ -30,6 +30,6 @@ def cli_entry_point():
         # Process notes
         for pattern in song.patterns:
             for note in pattern.notes:
-                print("On note:",note,pattern.instrument)
+                print(note)
     else:
         print_usage()
