@@ -12,6 +12,7 @@ setup(
         'console_scripts': ['plaintext-daw=plaintext_daw.cli:cli_entry_point'],
     },
     install_requires=[
+        'numpy',
         'pyyaml',
     ],
 )

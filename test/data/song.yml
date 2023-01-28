@@ -9,7 +9,7 @@ song:
     piano:
       samples:
         a:
-          path: piano/PianoA5.ogg.wav
+          path: piano/Piano-A5.ogg.wav
         c:
           path: piano/Piano-C5.ogg.wav
   patterns:
@@ -20,5 +20,5 @@ song:
       notes:
         - value: a
           length: 1
-        - value: b
+        - value: c
           length: 2
