@@ -6,14 +6,20 @@ import numpy as np
 import yaml
 
 from plaintext_daw.models import Instrument, Note, Pattern, Sample, Song
+from plaintext_daw.gui import gui
 
 
 def print_usage():
     print("Usage:")
     print("  plaintext-daw <FILE>: render project file to wav")
+    print("  plaintext-daw gui:    open a GUI")
+
 
 def cli_entry_point():
     if len(sys.argv) == 2:
+        if sys.argv[1] == "gui":
+            exit(gui())
+
         file_path = sys.argv[1]
         if not os.path.exists(file_path):
             print("Error: %s not found" % file_path, file=sys.stderr)

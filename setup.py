@@ -14,5 +14,6 @@ setup(
     install_requires=[
         'numpy',
         'pyyaml',
+        'PyQt5'
     ],
 )
