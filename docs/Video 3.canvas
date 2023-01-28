@@ -9,7 +9,7 @@
 		{"id":"8f9908694f502687","x":-45,"y":-241,"width":378,"height":72,"type":"text","text":"Assume all notes are sequential and write to wav file one after the other"},
 		{"id":"34465fcb1adabfa5","x":-174,"y":-75,"width":250,"height":60,"color":"4","type":"text","text":"Get wav file into numpy array (using `wave` lib?)"},
 		{"id":"1522690a2a5e6703","x":-174,"y":33,"width":250,"height":60,"color":"4","type":"text","text":"Write numpy array to wav file"},
-		{"id":"c27b81ef56cc73bf","x":-183,"y":163,"width":269,"height":62,"type":"text","text":"Concat more than one wav file sequentially using numpy"},
+		{"id":"c27b81ef56cc73bf","x":-183,"y":163,"width":269,"height":62,"color":"4","type":"text","text":"Concat more than one wav file sequentially using numpy"},
 		{"id":"5982504ad2a08f46","x":-248,"y":288,"width":400,"height":400,"type":"link","url":"https://stackoverflow.com/a/62298670/"}
 	],
 	"edges":[

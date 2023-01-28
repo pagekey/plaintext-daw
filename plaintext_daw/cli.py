@@ -31,6 +31,8 @@ def cli_entry_point():
             pattern.instrument = song.instruments[pattern.instrument]
             pattern.notes = [Note(**x) for x in pattern.notes]
         # Process notes
+        song_data = np.empty(1)
+
         for pattern in song.patterns:
             for note in pattern.notes:
                 # Open the sample
@@ -48,16 +50,17 @@ def cli_entry_point():
                 audio_float32 = audio_int16.astype(np.float32)
                 max_int16 = 2**15
                 audio_normalized = audio_float32 / max_int16
-                print(audio_normalized)
-                # Convert back to raw audio
-                audio_raw = audio_normalized * max_int16
-                audio_raw_int16 = audio_raw.astype(np.int16)
-                # Write to file
-                os.makedirs('out', exist_ok=True)
-                f_out = wave.open(os.path.join('out',sample_path.split('/')[-1]), 'wb')
-                f_out.setnchannels(channels)
-                f_out.setsampwidth(sample_width)
-                f_out.setframerate(sample_rate)
-                f_out.writeframes(audio_raw_int16)
+                song_data = np.concatenate([song_data, audio_normalized])
+                print(song_data)
+
+        # Convert song to raw audio
+        audio_raw = song_data * max_int16
+        audio_raw_int16 = audio_raw.astype(np.int16)
+        # Write to file
+        f_out = wave.open('song.wav', 'wb')
+        f_out.setnchannels(channels)
+        f_out.setsampwidth(sample_width)
+        f_out.setframerate(sample_rate)
+        f_out.writeframes(audio_raw_int16)
     else:
         print_usage()
