@@ -30,6 +30,6 @@ class Song:
             bpm=dict['bpm'] if 'bpm' in dict else None,
             sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
             samples=[Sample.from_dict(elem) for elem in dict['samples']] if 'samples' in dict else None,
-            instruments=[Instrument.from_dict(elem) for elem in dict['instruments']] if 'instruments' in dict else None,
+            instruments={key: Instrument.from_dict(elem) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
             patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
         )

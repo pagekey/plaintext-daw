@@ -16,12 +16,12 @@ def print_usage():
     print("  plaintext-daw gui:    open a GUI")
 
 
-def cli_entry_point():
-    if len(sys.argv) == 2:
-        if sys.argv[1] == "gui":
+def cli_entry_point(args=sys.argv):
+    if len(args) == 2:
+        if args[1] == "gui":
             exit(gui())
         else:
-            file_path = sys.argv[1]
+            file_path = args[1]
             if not os.path.exists(file_path):
                 print("Error: %s not found" % file_path, file=sys.stderr)
                 sys.exit(1)
@@ -29,21 +29,15 @@ def cli_entry_point():
             with open(file_path, 'r') as f:
                 raw_yaml = f.read()
             config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
-            song = Song(**config['song'])
-            # Hydrate
-            song.samples = [Sample(**x) for x in song.samples]
-            song.instruments = {key: Instrument(**value) for key, value in song.instruments.items()}
-            song.patterns = [Pattern(**x) for x in song.patterns]
-            for pattern in song.patterns:
-                pattern.instrument = song.instruments[pattern.instrument]
-                pattern.notes = [Note(**x) for x in pattern.notes]
+            song = Song.from_dict(config['song'])
             # Process notes
             song_data = np.empty(1)
 
             for pattern in song.patterns:
                 for note in pattern.notes:
                     # Open the sample
-                    sample_path = pattern.instrument.samples[note.value]['path']
+                    instrument = song.instruments[pattern.instrument]
+                    sample_path = instrument.samples[note.value]['path']
                     sample_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(song_dir, sample_path))
                     # Put it in the song at the right place
                     # Compute start/end based on metadata
