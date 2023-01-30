@@ -18,6 +18,10 @@ song:
       instrument: piano
       notes:
         - value: a
+          start_beat: 0
           length: 1
         - value: c
+          start_beat: 0
           length: 2
+        - value: a
+          start_beat: 1
