@@ -11,14 +11,13 @@ class TestPattern:
     def test_from_dict(self):
         obj = Pattern.from_dict({
             'name': 'pattern1',
-            'instrument': {'source': 'LOCAL_FILE'},
+            'instrument': 'piano',
             'notes': [{}],
             'start': 5,
             'repeat': 2,
         })
         assert obj.name == 'pattern1'
-        assert isinstance(obj.instrument, Instrument)
-        assert obj.instrument.source == InstrumentSource.LOCAL_FILE
+        assert obj.instrument == 'piano'
         assert isinstance(obj.notes[0], Note)
         assert obj.start == 5
         assert obj.repeat == 2

@@ -24,5 +24,5 @@ class Instrument:
     def from_dict(dict):
         return Instrument(
             source=InstrumentSource[dict['source']] if 'source' in dict else None,
-            samples=[Sample.from_dict(elem) for elem in dict['samples']] if 'samples' in dict else None,
+            samples={key: Sample.from_dict(elem) for key, elem in dict['samples'].items()} if 'samples' in dict else None,
         )

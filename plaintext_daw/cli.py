@@ -37,7 +37,7 @@ def cli_entry_point(args=sys.argv):
                 for note in pattern.notes:
                     # Open the sample
                     instrument = song.instruments[pattern.instrument]
-                    sample_path = instrument.samples[note.value]['path']
+                    sample_path = instrument.samples[note.value].path
                     sample_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(song_dir, sample_path))
                     # Put it in the song at the right place
                     # Compute start/end based on metadata

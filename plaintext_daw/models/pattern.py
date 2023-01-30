@@ -9,7 +9,7 @@ class Pattern:
     def __init__(
         self,
         name: str = '',
-        instrument: Instrument = Instrument(),
+        instrument: str = '',
         notes: List[Note] = [],
         start: int = 0,
         repeat: int = 0,
@@ -24,7 +24,7 @@ class Pattern:
     def from_dict(dict):
         return Pattern(
             name=dict['name'] if 'name' in dict else None,
-            instrument=Instrument.from_dict(dict['instrument']) if 'instrument' in dict else None,
+            instrument=dict['instrument'] if 'instrument' in dict else None,
             notes=[Note.from_dict(elem) for elem in dict['notes']] if 'notes' in dict else None,
             start=dict['start'] if 'start' in dict else None,
             repeat=dict['repeat'] if 'repeat' in dict else None,

@@ -12,7 +12,7 @@ class TestInstrument:
     def test_from_dict(self):
         obj = Instrument.from_dict({
             'source': 'LOCAL_FILE',
-            'samples': [{}],
+            'samples': {'a': {}},
         })
         assert obj.source == InstrumentSource.LOCAL_FILE
-        assert isinstance(obj.samples[0], Sample)
+        assert isinstance(obj.samples['a'], Sample)
