@@ -18,7 +18,9 @@
 		{"id":"e25d4c162c1cebb3","x":507,"y":-105,"width":250,"height":60,"type":"text","text":"Add support for chords"},
 		{"id":"96168461ba826c14","x":507,"y":-15,"width":250,"height":60,"type":"text","text":"Add support for samples"},
 		{"id":"1f34fb08fc1f98ca","x":507,"y":68,"width":250,"height":60,"type":"text","text":"Buffered render?"},
-		{"id":"7a6eb4edf2c1a5b0","x":875,"y":-105,"width":250,"height":60,"type":"text","text":"Load instrument from git repo"}
+		{"id":"7a6eb4edf2c1a5b0","x":875,"y":-105,"width":250,"height":60,"type":"text","text":"Load instrument from git repo"},
+		{"id":"7368cd1d3c5846c2","x":744,"y":462,"width":250,"height":60,"type":"text","text":"ChatGPT integration?\n-LTStrange"},
+		{"id":"43f9207b4f2cdab3","x":875,"y":8,"width":250,"height":60,"type":"text","text":"abc.js support - load files"}
 	],
 	"edges":[
 		{"id":"42ad9220b622bc39","fromNode":"ef8ffd41686c796a","fromSide":"right","toNode":"6ebf7a09a7c223a5","toSide":"left"},
