@@ -3,7 +3,7 @@ class Note:
     def __init__(
         self,
         value: str = '',
-        length: int = 1,
+        length: float = 1,
     ):
         self.value = value
         self.length = length
