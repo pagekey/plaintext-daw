@@ -1,11 +1,6 @@
 {
 	"nodes":[
-		{"id":"ef8ffd41686c796a","x":-472,"y":-290,"width":250,"height":60,"type":"text","text":"Python prototype implementation"},
-		{"id":"6ebf7a09a7c223a5","x":-117,"y":-290,"width":250,"height":60,"type":"text","text":"Rust re-implementation"},
-		{"id":"515527f608455b43","x":-492,"y":-310,"width":645,"height":100,"type":"group","label":"Architecture"},
-		{"id":"a2ce55dde47cf092","x":-492,"y":-155,"width":896,"height":100,"type":"group","label":"Implementation"},
-		{"id":"11d37ce49304e0d8","x":-472,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 1.canvas|Video 1]]: Project/CLI Setup"},
-		{"id":"f67f06a2dfe2607f","x":-168,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 2.canvas|Video 2]]: Parsing Config"},
+		{"id":"7a6eb4edf2c1a5b0","x":875,"y":-105,"width":385,"height":60,"type":"text","text":"Load instrument from git repo\n(implement more InstrumentSource types)"},
 		{"id":"e98cac6781019be1","x":832,"y":-709,"width":250,"height":60,"type":"text","text":"GUI: Display Patterns"},
 		{"id":"acbb183ec74bfa8c","x":832,"y":-627,"width":250,"height":60,"type":"text","text":"GUI: Display Song (timeline)"},
 		{"id":"752261370b39ba7f","x":832,"y":-545,"width":250,"height":60,"type":"text","text":"GUI: Display samples"},
@@ -16,9 +11,14 @@
 		{"id":"5d809cd1f5f55bab","x":487,"y":-383,"width":250,"height":60,"type":"text","text":"GUI: Open project dialog"},
 		{"id":"f0279d95ca2d5c07","x":832,"y":-278,"width":250,"height":60,"type":"text","text":"GUI: invoke render, save-as"},
 		{"id":"e25d4c162c1cebb3","x":507,"y":-105,"width":250,"height":60,"type":"text","text":"Add support for chords"},
+		{"id":"ef8ffd41686c796a","x":-472,"y":-290,"width":250,"height":60,"type":"text","text":"Python prototype implementation"},
+		{"id":"6ebf7a09a7c223a5","x":-117,"y":-290,"width":250,"height":60,"type":"text","text":"Rust re-implementation"},
+		{"id":"515527f608455b43","x":-492,"y":-310,"width":645,"height":100,"type":"group","label":"Architecture"},
+		{"id":"a2ce55dde47cf092","x":-492,"y":-155,"width":896,"height":100,"type":"group","label":"Implementation"},
+		{"id":"11d37ce49304e0d8","x":-472,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 1.canvas|Video 1]]: Project/CLI Setup"},
+		{"id":"f67f06a2dfe2607f","x":-168,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 2.canvas|Video 2]]: Parsing Config"},
 		{"id":"96168461ba826c14","x":507,"y":-15,"width":250,"height":60,"type":"text","text":"Add support for samples"},
 		{"id":"1f34fb08fc1f98ca","x":507,"y":68,"width":250,"height":60,"type":"text","text":"Buffered render?"},
-		{"id":"7a6eb4edf2c1a5b0","x":875,"y":-105,"width":250,"height":60,"type":"text","text":"Load instrument from git repo"},
 		{"id":"7368cd1d3c5846c2","x":744,"y":462,"width":250,"height":60,"type":"text","text":"ChatGPT integration?\n-LTStrange"},
 		{"id":"43f9207b4f2cdab3","x":875,"y":8,"width":250,"height":60,"type":"text","text":"abc.js support - load files"}
 	],

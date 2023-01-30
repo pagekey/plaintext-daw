@@ -1,5 +1,3 @@
-
-
 class Sample:
 
     def __init__(

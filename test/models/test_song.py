@@ -1,4 +1,4 @@
-from plaintext_daw.models.song import Instrument, Pattern, Sample, Song
+from plaintext_daw.models import Instrument, Pattern, Sample, Song
 
 
 class TestSong:
