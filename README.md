@@ -1,6 +1,6 @@
 # plaintext-daw
 
-A plaintext DAW
+A plaintext DAW (Digital Audio Workstation)
 
 ## Docs
 
