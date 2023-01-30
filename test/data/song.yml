@@ -1,5 +1,4 @@
 song:
-  output: 'song.wav'
   bpm: 100
   sample_rate: 44100
   samples:

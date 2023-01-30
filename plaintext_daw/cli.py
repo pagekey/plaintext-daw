@@ -25,26 +25,14 @@ def cli_entry_point(args=sys.argv):
             if not os.path.exists(file_path):
                 print("Error: %s not found" % file_path, file=sys.stderr)
                 sys.exit(1)
+            # Load config
             song_dir = os.path.dirname(file_path)
             with open(file_path, 'r') as f:
                 raw_yaml = f.read()
             config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
+            config['song']['path'] = song_dir # not the best design move, but works for now
             song = Song.from_dict(config['song'])
-            # Process notes
-            song_data = np.empty(1)
-
-            for pattern in song.patterns:
-                for note in pattern.notes:
-                    # Open the sample
-                    instrument = song.instruments[pattern.instrument]
-                    sample_path = instrument.samples[note.value].path
-                    sample_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(song_dir, sample_path))
-                    # Put it in the song at the right place
-                    # Compute start/end based on metadata
-                    # Extend length of song if not yet long enough
-                    # Add sample into the song at the right place
-                    song_data = np.concatenate([song_data, sample_np])
-
-            np_to_wav(song_data, channels, sample_width, sample_rate, 'song.wav')
+            # Render song to file
+            song.render('song.wav')
     else:
         print_usage()
