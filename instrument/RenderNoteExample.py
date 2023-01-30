@@ -1,16 +1,11 @@
-from dataclasses import dataclass
 import wave
 import numpy as np
 import yaml
 
+from models import Sin, Config
+
 sample_rate = 44100  # hz
 sample_width = 2  # bytes
-
-
-@dataclass
-class Sin:
-    base_freq: float
-    harmonic: int = 5
 
 
 def fade_in_out(note, in_rate=0.1, out_rate=0.9):
@@ -38,12 +33,18 @@ def gen_note(note: Sin, d) -> np.ndarray:
     return fade_in_out(note_wave / A_sum)
 
 
-def read_yaml(filename: str):
+def read_yaml(filename: str) -> Config:
     with open(filename, 'r') as raw_yaml:
         config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
 
-    notes = dict([(key, eval(config['instrument']['notes'][key])) for key in config['instrument']['notes']])
-    return notes
+    instrument = config['instrument']
+    config = Config()
+    config.set_name(instrument['name'])
+    config.set_effects(instrument['effects'])
+    # load notes
+    config.set_notes(instrument['notes'])
+
+    return config
 
 
 def save_song(filename: str, song: np.ndarray):
@@ -58,8 +59,12 @@ def save_song(filename: str, song: np.ndarray):
 
 if __name__ == '__main__':
     notes_dict = read_yaml("instrument.yml")
-    notes_dict['z'] = Sin(0, 0)
+    print(notes_dict)
+    exit()
 
+    notes_dict['z'] = Note(0, 0)
+
+    # cooley's reel
     note_arr = [('D', 2),
                 ('E', 1), ('B', 1), ('C', .5), ('B', .5), ('A', 1), ('B', 2), ('E', 1), ('B', 1),
                 ('B', 2), ('A', 1), ('B', 1), ('d', 1), ('B', 1), ('A', 1), ('G', 1),
@@ -75,4 +80,4 @@ if __name__ == '__main__':
 
     song = np.concatenate([song, np.zeros(sample_rate // 4)])
 
-    save_song("200.wav", song)
+    save_song("example.wav", song)
