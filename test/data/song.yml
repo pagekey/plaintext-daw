@@ -29,3 +29,15 @@ song:
         - value: c
           start_beat: 0.5
           length: 1
+        - value: c
+          start_beat: 0.75
+          length: 1
+        - value: a
+          start_beat: 1
+          length: 1
+        - value: c
+          start_beat: 1
+          length: 1
+        - value: a
+          start_beat: 1.5
+          length: 1
