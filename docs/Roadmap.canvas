@@ -1,26 +1,27 @@
 {
 	"nodes":[
-		{"id":"7a6eb4edf2c1a5b0","x":875,"y":-105,"width":385,"height":60,"type":"text","text":"Load instrument from git repo\n(implement more InstrumentSource types)"},
 		{"id":"e98cac6781019be1","x":832,"y":-709,"width":250,"height":60,"type":"text","text":"GUI: Display Patterns"},
 		{"id":"acbb183ec74bfa8c","x":832,"y":-627,"width":250,"height":60,"type":"text","text":"GUI: Display Song (timeline)"},
 		{"id":"752261370b39ba7f","x":832,"y":-545,"width":250,"height":60,"type":"text","text":"GUI: Display samples"},
 		{"id":"fc5f2e15443bbd6c","x":812,"y":-729,"width":290,"height":426,"type":"group","label":"Display"},
-		{"id":"721f1c61f05dac26","x":134,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 3.canvas|Video 3]]: Concatenate wavs"},
-		{"id":"5fee10b6904483a1","x":832,"y":-383,"width":250,"height":60,"type":"text","text":"GUI: Live render pattern"},
 		{"id":"76869a7f31c3f6d7","x":832,"y":-463,"width":250,"height":60,"type":"text","text":"GUI: Live render song"},
-		{"id":"5d809cd1f5f55bab","x":487,"y":-383,"width":250,"height":60,"type":"text","text":"GUI: Open project dialog"},
-		{"id":"f0279d95ca2d5c07","x":832,"y":-278,"width":250,"height":60,"type":"text","text":"GUI: invoke render, save-as"},
-		{"id":"e25d4c162c1cebb3","x":507,"y":-105,"width":250,"height":60,"type":"text","text":"Add support for chords"},
 		{"id":"ef8ffd41686c796a","x":-472,"y":-290,"width":250,"height":60,"type":"text","text":"Python prototype implementation"},
 		{"id":"6ebf7a09a7c223a5","x":-117,"y":-290,"width":250,"height":60,"type":"text","text":"Rust re-implementation"},
 		{"id":"515527f608455b43","x":-492,"y":-310,"width":645,"height":100,"type":"group","label":"Architecture"},
 		{"id":"a2ce55dde47cf092","x":-492,"y":-155,"width":896,"height":100,"type":"group","label":"Implementation"},
 		{"id":"11d37ce49304e0d8","x":-472,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 1.canvas|Video 1]]: Project/CLI Setup"},
+		{"id":"721f1c61f05dac26","x":134,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 3.canvas|Video 3]]: Concatenate wavs"},
+		{"id":"5fee10b6904483a1","x":832,"y":-383,"width":250,"height":60,"type":"text","text":"GUI: Live render pattern"},
+		{"id":"5d809cd1f5f55bab","x":487,"y":-383,"width":250,"height":60,"color":"4","type":"text","text":"GUI: Open project dialog\nDone by LTstrange in [#2](https://github.com/pagekeytech/plaintext-daw/pull/2)"},
+		{"id":"f0279d95ca2d5c07","x":832,"y":-278,"width":250,"height":60,"type":"text","text":"GUI: invoke render, save-as"},
+		{"id":"e25d4c162c1cebb3","x":507,"y":-105,"width":305,"height":60,"color":"4","type":"text","text":"Add support for tempo, chords\nDone in [#4](https://github.com/pagekeytech/plaintext-daw/pull/4)"},
 		{"id":"f67f06a2dfe2607f","x":-168,"y":-135,"width":250,"height":60,"color":"4","type":"text","text":"[[Video 2.canvas|Video 2]]: Parsing Config"},
 		{"id":"96168461ba826c14","x":507,"y":-15,"width":250,"height":60,"type":"text","text":"Add support for samples"},
 		{"id":"1f34fb08fc1f98ca","x":507,"y":68,"width":250,"height":60,"type":"text","text":"Buffered render?"},
-		{"id":"7368cd1d3c5846c2","x":744,"y":462,"width":250,"height":60,"type":"text","text":"ChatGPT integration?\n-LTStrange"},
-		{"id":"43f9207b4f2cdab3","x":875,"y":8,"width":250,"height":60,"type":"text","text":"abc.js support - load files"}
+		{"id":"43f9207b4f2cdab3","x":890,"y":45,"width":250,"height":60,"color":"3","type":"text","text":"abc.js support - load files"},
+		{"id":"7a6eb4edf2c1a5b0","x":890,"y":-68,"width":385,"height":60,"color":"3","type":"text","text":"Load instrument from git repo\n(implement more InstrumentSource types)"},
+		{"id":"42f396f1a710a90f","x":507,"y":161,"width":284,"height":60,"color":"3","type":"text","text":"Synthesize from expression\nLTstrange [#3](https://github.com/pagekeytech/plaintext-daw/pull/3) in progress"},
+		{"id":"7368cd1d3c5846c2","x":890,"y":274,"width":250,"height":60,"color":"3","type":"text","text":"ChatGPT integration?\n-LTStrange"}
 	],
 	"edges":[
 		{"id":"42ad9220b622bc39","fromNode":"ef8ffd41686c796a","fromSide":"right","toNode":"6ebf7a09a7c223a5","toSide":"left"},
@@ -35,6 +36,7 @@
 		{"id":"b4de894b83768188","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"5d809cd1f5f55bab","toSide":"left"},
 		{"id":"a54534f3cc95900c","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"e25d4c162c1cebb3","toSide":"left"},
 		{"id":"b08c5c8bf88786f9","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"96168461ba826c14","toSide":"left"},
-		{"id":"a3f7f65837fdc7ac","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"1f34fb08fc1f98ca","toSide":"left"}
+		{"id":"a3f7f65837fdc7ac","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"1f34fb08fc1f98ca","toSide":"left"},
+		{"id":"bbaf07149c1649a9","fromNode":"721f1c61f05dac26","fromSide":"right","toNode":"42f396f1a710a90f","toSide":"left"}
 	]
 }

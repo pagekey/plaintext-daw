@@ -39,8 +39,6 @@ class Song:
         )
 
     def render(self, out_filename: str):
-        song_data = np.empty(1)
-
         # Aggregate notes into a single list
         # Eventually, this approach will need to be upgraded when patterns have an offset too
         # For now, it works
