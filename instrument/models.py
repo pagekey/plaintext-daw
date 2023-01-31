@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Tuple
 import re
 import yaml
+from effects import sin, fade_in_out
 
 
 @dataclass
@@ -55,3 +56,24 @@ class Instrument:
             params, effect_seq = self.effects[effect_name]
             assert len(params) == len(values)
             self.notes[note_key] = Note(values, effect_name)
+
+    def render_note(self, note_name: str, duration: float):
+        note = self.notes[note_name]
+        formal_param, effect_seq = self.effects[note.effect]
+
+        name_space = dict(zip(formal_param, note.params))
+
+        result = None
+        for effect in effect_seq:
+            name, param = re.match(r'([a-zA-Z_]+)\((.*)\)', effect).groups()
+            param = [p.strip() for p in param.split(',')]
+            param = [name_space[p] if p in name_space else p for p in param]
+            if name == "sin":
+                param.append(duration)
+                result = sin(*param)
+            elif name == 'fade_in_out':
+                assert result is not None
+                result = fade_in_out(result)
+            else:
+                raise
+        return result
