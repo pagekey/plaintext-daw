@@ -22,9 +22,9 @@ class Note:
         # sample_rate: samples per second
         # bpm: beats per minute
         bps = bpm / 60
-        return sample_rate * bps * self.start_beat
+        return int(sample_rate * bps * self.start_beat)
 
     def get_end_sample(self, sample_rate, bpm):
         bps = bpm / 60
         len_sample = bps * sample_rate * self.length
-        return self.get_start_sample(sample_rate, bpm) + len_sample
+        return int(self.get_start_sample(sample_rate, bpm) + len_sample)

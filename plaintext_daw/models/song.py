@@ -41,16 +41,32 @@ class Song:
     def render(self, out_filename: str):
         song_data = np.empty(1)
 
+        # Aggregate notes into a single list
+        # Eventually, this approach will need to be upgraded when patterns have an offset too
+        # For now, it works
+        all_notes = []
         for pattern in self.patterns:
             for note in pattern.notes:
-                # Open the sample
-                instrument = self.instruments[pattern.instrument]
-                clip_path = instrument.clips[note.value].path
-                clip_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.path, clip_path))
-                # Put it in the song at the right place
-                # Compute start/end based on metadata
-                # Extend length of song if not yet long enough
-                # Add sample into the song at the right place
-                song_data = np.concatenate([song_data, clip_np])
+                all_notes.append(note)
+        
+        # Figure out how many samples the final render will be
+        # end_sample = max([n.get_end_sample(self.sample_rate, self.bpm) for n in all_notes])
+        
+        # Allocate an np array for the entire song
+        song_data = np.zeros(1)
+        for note in all_notes:
+            # Get the raw audio data for this note
+            instrument = self.instruments[pattern.instrument]
+            clip_path = instrument.clips[note.value].path
+            clip_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.path, clip_path))
+            # Compute sample start/end
+            start = note.get_start_sample(self.sample_rate, self.bpm)
+            end = start + len(clip_np)
+            # If end is past the song end, pad out the rest of the song with zeros
+            num_new_samples = end - len(song_data)
+            if num_new_samples > 0:
+                song_data = np.pad(song_data, (0, num_new_samples))
+            # Put it in the song at the right place
+            song_data[start:end] += clip_np
 
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)

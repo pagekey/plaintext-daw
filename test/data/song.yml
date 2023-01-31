@@ -24,4 +24,8 @@ song:
           start_beat: 0
           length: 2
         - value: a
-          start_beat: 1
+          start_beat: 0.25
+          length: 1
+        - value: c
+          start_beat: 0.5
+          length: 1
