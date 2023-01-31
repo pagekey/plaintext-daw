@@ -10,7 +10,8 @@
 		{"id":"34465fcb1adabfa5","x":-174,"y":-75,"width":250,"height":60,"color":"4","type":"text","text":"Get wav file into numpy array (using `wave` lib?)"},
 		{"id":"1522690a2a5e6703","x":-174,"y":33,"width":250,"height":60,"color":"4","type":"text","text":"Write numpy array to wav file"},
 		{"id":"c27b81ef56cc73bf","x":-183,"y":163,"width":269,"height":62,"color":"4","type":"text","text":"Concat more than one wav file sequentially using numpy"},
-		{"id":"5982504ad2a08f46","x":-248,"y":288,"width":400,"height":400,"type":"link","url":"https://stackoverflow.com/a/62298670/"}
+		{"id":"5982504ad2a08f46","x":-248,"y":288,"width":400,"height":400,"type":"link","url":"https://stackoverflow.com/a/62298670/"},
+		{"id":"fdffcbd902de9780","x":248,"y":-96,"width":430,"height":159,"type":"text","text":"Timestamps\n0:00 Roadmap\n2:20 Coding Plan for Video 3\n4:33 Coding"}
 	],
 	"edges":[
 		{"id":"67465a6b68b6ca9e","fromNode":"34465fcb1adabfa5","fromSide":"bottom","toNode":"1522690a2a5e6703","toSide":"top"},
