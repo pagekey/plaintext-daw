@@ -1,5 +1,4 @@
 song:
-  output: 'song.wav'
   bpm: 100
   sample_rate: 44100
   samples:
@@ -7,7 +6,7 @@ song:
       start: 2 # start on measure 2
   instruments:
     piano:
-      samples:
+      clips:
         a:
           path: piano/Piano-A5.ogg.wav
         c:
@@ -19,6 +18,26 @@ song:
       instrument: piano
       notes:
         - value: a
+          start_beat: 0
           length: 1
         - value: c
+          start_beat: 0
           length: 2
+        - value: a
+          start_beat: 0.25
+          length: 1
+        - value: c
+          start_beat: 0.5
+          length: 1
+        - value: c
+          start_beat: 0.75
+          length: 1
+        - value: a
+          start_beat: 1
+          length: 1
+        - value: c
+          start_beat: 1
+          length: 1
+        - value: a
+          start_beat: 1.5
+          length: 1
