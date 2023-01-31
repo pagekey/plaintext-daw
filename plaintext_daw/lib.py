@@ -3,8 +3,8 @@ import wave
 
 import numpy as np
 
+MAX_INT16 = 2 ** 15
 
-MAX_INT16 = 2**15
 
 def wav_to_np(wav_path) -> np.ndarray:
     f = wave.open(wav_path)
@@ -21,7 +21,11 @@ def wav_to_np(wav_path) -> np.ndarray:
     audio_normalized = audio_float32 / MAX_INT16
     return audio_normalized, channels, sample_width, sample_rate
 
+
 def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
+    # clamp value
+    song_np = np.clip(song_np, -1.0, 1.0)
+
     # Convert song to raw audio
     audio_raw = song_np * MAX_INT16
     audio_raw_int16 = audio_raw.astype(np.int16)
