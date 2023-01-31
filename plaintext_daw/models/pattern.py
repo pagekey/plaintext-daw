@@ -1,6 +1,5 @@
 from typing import List
 
-from .instrument import Instrument
 from .note import Note
 
 

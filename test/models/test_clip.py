@@ -1,14 +1,14 @@
-from plaintext_daw.models import Sample
+from plaintext_daw.models import Clip
 
 
-class TestSample:
+class TestClip:
     def test_init(self):
-        obj = Sample()
-        assert isinstance(obj, Sample)
+        obj = Clip()
+        assert isinstance(obj, Clip)
         assert obj.path == ''
 
     def test_from_dict(self):
-        obj = Sample.from_dict({
+        obj = Clip.from_dict({
             'path': 'mysound.wav',
             'start': 2,
         })

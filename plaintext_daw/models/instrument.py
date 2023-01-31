@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict
 
-from .sample import Sample
+from .clip import Clip
 
 
 class InstrumentSource(Enum):
@@ -15,14 +15,14 @@ class Instrument:
     def __init__(
         self,
         source: InstrumentSource=InstrumentSource.IN_PLACE,
-        samples: Dict[str, Sample]={}
+        clips: Dict[str, Clip]={}
     ):
         self.source = source
-        self.samples = samples
+        self.clips = clips
 
     @staticmethod
     def from_dict(dict):
         return Instrument(
             source=InstrumentSource[dict['source']] if 'source' in dict else None,
-            samples={key: Sample.from_dict(elem) for key, elem in dict['samples'].items()} if 'samples' in dict else None,
+            clips={key: Clip.from_dict(elem) for key, elem in dict['clips'].items()} if 'clips' in dict else None,
         )

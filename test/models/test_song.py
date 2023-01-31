@@ -1,4 +1,4 @@
-from plaintext_daw.models import Instrument, Pattern, Sample, Song
+from plaintext_daw.models import Instrument, Pattern, Clip, Song
 
 
 class TestSong:
@@ -11,12 +11,12 @@ class TestSong:
         song = Song.from_dict({
             'bpm': 120,
             'sample_rate': 48000,
-            'samples': [{}],
+            'clips': [{}],
             'instruments': {'piano': {}},
             'patterns': [{}], 
         })
         assert song.bpm == 120
         assert song.sample_rate == 48000
-        assert isinstance(song.samples[0], Sample)
+        assert isinstance(song.clips[0], Clip)
         assert isinstance(song.instruments['piano'], Instrument)
         assert isinstance(song.patterns[0], Pattern)

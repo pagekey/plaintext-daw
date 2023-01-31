@@ -6,7 +6,7 @@ song:
       start: 2 # start on measure 2
   instruments:
     piano:
-      samples:
+      clips:
         a:
           path: piano/Piano-A5.ogg.wav
         c:

@@ -1,4 +1,4 @@
-class Sample:
+class Clip:
 
     def __init__(
         self,
@@ -10,7 +10,7 @@ class Sample:
     
     @staticmethod
     def from_dict(dict):
-        return Sample(
+        return Clip(
             path=dict['path'] if 'path' in dict else None,
             start=dict['start'] if 'start' in dict else None,
         )

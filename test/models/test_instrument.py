@@ -1,5 +1,5 @@
 
-from plaintext_daw.models import Instrument, Sample
+from plaintext_daw.models import Instrument, Clip
 from plaintext_daw.models.instrument import InstrumentSource
 
 
@@ -12,7 +12,7 @@ class TestInstrument:
     def test_from_dict(self):
         obj = Instrument.from_dict({
             'source': 'LOCAL_FILE',
-            'samples': {'a': {}},
+            'clips': {'a': {}},
         })
         assert obj.source == InstrumentSource.LOCAL_FILE
-        assert isinstance(obj.samples['a'], Sample)
+        assert isinstance(obj.clips['a'], Clip)

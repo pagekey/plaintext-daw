@@ -1,13 +1,10 @@
 import os
 import sys
-import wave
 
-import numpy as np
 import yaml
 
 from .gui import gui
-from .lib import np_to_wav, wav_to_np
-from .models import Instrument, Note, Pattern, Sample, Song
+from .models import Song
 
 
 def print_usage():
