@@ -14,7 +14,7 @@ class TestInstrument:
         assert instrument.notes == dict()
 
     def test_read_from_yaml(self):
-        instrument = Instrument.read_yaml("../instrument/instrument.yml")
+        instrument = Instrument.read_yaml("instrument/instrument.yml")
         assert instrument.name is not None
         assert len(instrument.notes) != 0
 

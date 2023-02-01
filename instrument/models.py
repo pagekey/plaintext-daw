@@ -59,7 +59,7 @@ class Instrument:
             effect_name, values = re.match(r'([a-zA-Z]+)\((.*)\)', note_def).groups()
             values = [v.strip() for v in values.split(',')]
             # make sure the effect name is already defined
-            assert effect_name in set(self.effects.keys()).update(['sin', "fade_in_out"])
+            assert effect_name in set(self.effects.keys()).union(['sin', "fade_in_out"])
             params, effect_seq = self.effects[effect_name]
             assert len(params) == len(values)  # make sure the actual para and formal param matched there length
             self.notes[note_key] = Note(values, effect_name)
