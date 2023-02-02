@@ -9,8 +9,7 @@ from .clip import Clip
 
 class InstrumentSource(Enum):
     IN_PLACE = 1 # in the config, no need to load an external file
-    # TODO add support for these eventually
-    LOCAL_FILE = 2 # present somewhere on filesystem
+    LOCAL_FILE = 2 # config file present somewhere on filesystem
     GIT = 3 # can be loaded with Git, either via ssh or https depending on the url
 
 class Instrument:
@@ -32,14 +31,14 @@ class Instrument:
         self.clips = clips
 
     @staticmethod
-    def from_dict(dict):
+    def from_dict(dict, config_path):
         return Instrument(
             name=dict['name'] if 'name' in dict else None,
             repo=dict['repo'] if 'repo' in dict else None,
             ref=dict['ref'] if 'ref' in dict else None,
             path=dict['path'] if 'path' in dict else None,
             source=InstrumentSource[dict['source']] if 'source' in dict else None,
-            clips={key: Clip.from_dict(elem) for key, elem in dict['clips'].items()} if 'clips' in dict else None,
+            clips={key: Clip.from_dict(elem, config_path) for key, elem in dict['clips'].items()} if 'clips' in dict else None,
         )
 
     def get_repo_name(self):

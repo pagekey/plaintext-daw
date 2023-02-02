@@ -15,7 +15,7 @@ class TestInstrument:
         obj = Instrument.from_dict({
             'source': 'LOCAL_FILE',
             'clips': {'a': {}},
-        })
+        }, '.')
         assert obj.source == InstrumentSource.LOCAL_FILE
         assert isinstance(obj.clips['a'], Clip)
 
@@ -28,7 +28,7 @@ class TestInstrument:
             'repo': 'git@github.com:pagekeytech/plaintext-daw-instruments',
             'ref': 'master',
             'path': 'piano/instrument.yml',
-        })
+        }, '.')
         assert instrument.source == InstrumentSource.GIT
         assert instrument.name == 'piano'
         assert instrument.repo == 'git@github.com:pagekeytech/plaintext-daw-instruments'

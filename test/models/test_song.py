@@ -14,7 +14,7 @@ class TestSong:
             'clips': [{}],
             'instruments': {'piano': {}},
             'patterns': [{}], 
-        })
+        }, '.')
         assert song.bpm == 120
         assert song.sample_rate == 48000
         assert isinstance(song.clips[0], Clip)

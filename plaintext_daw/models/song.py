@@ -28,13 +28,13 @@ class Song:
         self.patterns = patterns
 
     @staticmethod
-    def from_dict(dict):
+    def from_dict(dict, config_dir):
         return Song(
             path=dict['path'] if 'path' in dict else None,
             bpm=dict['bpm'] if 'bpm' in dict else None,
             sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
-            clips=[Clip.from_dict(elem) for elem in dict['clips']] if 'clips' in dict else None,
-            instruments={key: Instrument.from_dict(elem) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
+            clips=[Clip.from_dict(elem, config_dir) for elem in dict['clips']] if 'clips' in dict else None,
+            instruments={key: Instrument.from_dict(elem, config_dir) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
             patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
         )
 
@@ -55,8 +55,7 @@ class Song:
         for note in all_notes:
             # Get the raw audio data for this note
             instrument = self.instruments[pattern.instrument]
-            clip_path = instrument.clips[note.value].path
-            clip_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.path, clip_path))
+            clip_np, channels, sample_width, sample_rate = instrument.clips[note.value].to_np()
             # Compute sample start/end
             start = note.get_start_sample(self.sample_rate, self.bpm)
             end = start + len(clip_np)
