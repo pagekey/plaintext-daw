@@ -4,7 +4,9 @@ A plaintext DAW
 
 ## Pre-Requisites
 
-You must have Git installed on your system and available in the PATH.
+- You must have Git installed on your system and available in the PATH.
+
+- You must have Git LFS installed and configured for use.
 
 ## Installation
 
