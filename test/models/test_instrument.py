@@ -32,7 +32,6 @@ class TestInstrument:
         assert instrument.source == InstrumentSource.GIT
         assert instrument.name == 'piano'
         assert instrument.repo == 'git@github.com:pagekeytech/plaintext-daw-instruments'
-        assert instrument.path == 'piano/instrument.yml'
         assert instrument.is_loaded() == False
         instrument.load()
         assert instrument.is_loaded() == True

@@ -16,8 +16,8 @@ class Song:
         bpm: int = 100,
         sample_rate: int = 44100,
         clips: List[Clip] = [],
-        instruments: List[Instrument] = [],
-        patterns: List[Pattern] = [],
+        instruments: List[Instrument] = {},
+        patterns: List[Pattern] = {},
         config_dir: str = '.',
     ):
         self.bpm = bpm
@@ -52,18 +52,26 @@ class Song:
         
         # Allocate an np array for the entire song
         song_data = np.zeros(1)
+        
+        # TODO support more options than just these defaults
+        channels = 1
+        sample_width = 2
+        sample_rate = self.sample_rate
+        
         for note in all_notes:
             # Get the raw audio data for this note
             instrument = self.instruments[pattern.instrument]
-            clip_np, channels, sample_width, sample_rate = instrument.clips[note.value].to_np()
-            # Compute sample start/end
-            start = note.get_start_sample(self.sample_rate, self.bpm)
-            end = start + len(clip_np)
-            # If end is past the song end, pad out the rest of the song with zeros
-            num_new_samples = end - len(song_data)
-            if num_new_samples > 0:
-                song_data = np.pad(song_data, (0, num_new_samples))
-            # Put it in the song at the right place
-            song_data[start:end] += clip_np
+            clip = instrument.get_clip(note.value)
+            if clip is not None: # only render note if found
+                clip_np, channels, sample_width, sample_rate = clip.to_np()
+                # Compute sample start/end
+                start = note.get_start_sample(self.sample_rate, self.bpm)
+                end = start + len(clip_np)
+                # If end is past the song end, pad out the rest of the song with zeros
+                num_new_samples = end - len(song_data)
+                if num_new_samples > 0:
+                    song_data = np.pad(song_data, (0, num_new_samples))
+                # Put it in the song at the right place
+                song_data[start:end] += clip_np
 
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)
