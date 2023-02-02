@@ -19,18 +19,16 @@ def cli_entry_point(args=sys.argv):
             exit(gui())
         elif args[1] == 'render':
             if len(args) >= 3:
-
                 config_path = args[2]
                 if not os.path.exists(config_path):
                     print("Error: %s not found" % config_path, file=sys.stderr)
                     sys.exit(1)
                 # Load config
-                song_dir = os.path.dirname(config_path)
+                config_dir = os.path.dirname(config_path)
                 with open(config_path, 'r') as f:
                     raw_yaml = f.read()
                 config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
-                config['song']['path'] = song_dir # not the best design move, but works for now
-                song = Song.from_dict(config['song'], os.path.dirname(config_path))
+                song = Song.from_dict(config['song'], config_dir)
                 # Render song to file
                 song.render('song.wav')
             else:

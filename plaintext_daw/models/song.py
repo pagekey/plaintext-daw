@@ -13,29 +13,29 @@ class Song:
 
     def __init__(
         self,
-        path: str = '',
         bpm: int = 100,
         sample_rate: int = 44100,
         clips: List[Clip] = [],
         instruments: List[Instrument] = [],
         patterns: List[Pattern] = [],
+        config_dir: str = '.',
     ):
-        self.path = path
         self.bpm = bpm
         self.sample_rate = sample_rate
         self.clips = clips
         self.instruments = instruments
         self.patterns = patterns
+        self.config_dir = config_dir
 
     @staticmethod
     def from_dict(dict, config_dir):
         return Song(
-            path=dict['path'] if 'path' in dict else None,
             bpm=dict['bpm'] if 'bpm' in dict else None,
             sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
             clips=[Clip.from_dict(elem, config_dir) for elem in dict['clips']] if 'clips' in dict else None,
             instruments={key: Instrument.from_dict(elem, config_dir) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
             patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
+            config_dir=config_dir,
         )
 
     def render(self, out_filename: str):
