@@ -13,11 +13,12 @@ class Clip:
 
     def __init__(
         self,
-        type: ClipType = ClipType.WAV,
+        type: ClipType = None,
         path: str = '',
         start: int = 0,
         config_dir: str = '.',
     ):
+        self.type = type if type is not None else ClipType.WAV # TODO make all the default like this or else they won't work
         self.path = path
         self.start = start
         self.config_dir = config_dir
