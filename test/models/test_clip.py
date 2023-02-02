@@ -19,7 +19,7 @@ class TestClip:
 
     def test_to_np(self):
         clip = Clip.from_dict({
-            'path': 'test/data/piano/Piano-A0.ogg.wav',
+            'path': 'test/data/song1/piano/Piano-A0.ogg.wav',
             'start': 2,
         }, '.')
         clip_np = clip.to_np()
