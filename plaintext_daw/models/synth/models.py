@@ -17,9 +17,9 @@ class Note:
     effect: str  # effect name
 
 
-class Instrument:
+class Synth:
     def __init__(self):
-        self.name: str = None  # instrument's name
+        self.name: str = None  # synth's name
         self.effects: Dict[
             str, Tuple[List[str], List[str]]] = dict()  # effect_name, list of formal_params, seq of effects
         self.notes: Dict[str, Note] = dict()  # defined notes
@@ -29,14 +29,14 @@ class Instrument:
         with open(filename, 'r') as raw_yaml:
             config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
 
-        config = config['instrument']
-        instrument = Instrument()
-        instrument.set_name(config['name'])
-        instrument.set_effects(config['effects'] if 'effects' in config else None)
+        config = config['synth']
+        synth = Synth()
+        synth.set_name(config['name'])
+        synth.set_effects(config['effects'] if 'effects' in config else None)
         # load notes
-        instrument.set_notes(config['notes'])
+        synth.set_notes(config['notes'])
 
-        return instrument
+        return synth
 
     def set_name(self, name):
         self.name = name

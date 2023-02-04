@@ -3,35 +3,35 @@
 # @Author  : LTstrange
 import numpy as np
 
-from instrument.models import Instrument, Note
+from plaintext_daw.models.synth.models import Synth, Note
 
 
-class TestInstrument:
+class TestSynth:
     def test_init(self):
-        instrument = Instrument()
+        instrument = Synth()
         assert instrument.name is None
         assert instrument.effects == dict()
         assert instrument.notes == dict()
 
     def test_read_from_yaml(self):
-        instrument = Instrument.read_yaml("instrument/instrument.yml")
+        instrument = Synth.read_yaml("plaintext_daw/models/synth/synth.yml")
         assert instrument.name is not None
         assert len(instrument.notes) != 0
 
     def test_set_name(self):
-        instrument = Instrument()
+        instrument = Synth()
         instrument.set_name("abc")
         assert instrument.name == "abc"
 
     def test_set_effect(self):
         effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
-        instrument = Instrument()
+        instrument = Synth()
         instrument.set_effects(effects)
 
         assert instrument.effects == {"Note": (["base", ], ["sin(base, 5)", "fade_in_out(*)"])}
 
     def test_set_notes(self):
-        instrument = Instrument()
+        instrument = Synth()
         # need to define effects before defining notes.
         effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
         instrument.set_effects(effects)
@@ -42,7 +42,7 @@ class TestInstrument:
         assert instrument.notes == {"C": Note(["65.406"], "Note")}
 
     def test_render_notes(self):
-        instrument = Instrument()
+        instrument = Synth()
         effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
         instrument.set_effects(effects)
 

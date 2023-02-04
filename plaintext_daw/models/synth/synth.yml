@@ -1,4 +1,4 @@
-instrument:
+synth:
   name: Sin-wave
   effects: #         sin(hz, harmonic)
     Note(base_freq): sin(base_freq, 5) | fade_in_out(*)

@@ -1,12 +1,14 @@
 import numpy as np
-from models import Note, Instrument
+
+from plaintext_daw.models.synth.models import Note, Synth
 from plaintext_daw.lib import np_to_wav
+
 
 sample_rate = 44100  # hz
 sample_width = 2  # bytes
 
 if __name__ == '__main__':
-    instrument = Instrument.read_yaml("instrument.yml")
+    instrument = Synth.read_yaml("instrument.yml")
 
     # Spring Festival overture
     note_arr = [('z', 1), ('e', 1), ('e', .5), ('d', .5),
