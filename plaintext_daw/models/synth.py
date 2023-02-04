@@ -27,7 +27,7 @@ def fade_in_out(note: np.ndarray, in_rate=0.1, out_rate=0.9):
     return note
 
 
-def sin(base_freq: float, harmonic: int, duration: float, sample_rate: int = 44100):
+def gen_sine(base_freq: float, harmonic: int, duration: float, sample_rate: int = 44100):
     # set up basic parameters
     base_freq = float(base_freq)
     harmonic = int(harmonic)
@@ -48,7 +48,7 @@ def sin(base_freq: float, harmonic: int, duration: float, sample_rate: int = 441
 
 
 @dataclass
-class SynthNote:
+class SynthClip:
     params: List[str]  # parameters this note can provide
     effect: str  # effect name
 
@@ -58,7 +58,7 @@ class Synth:
         self.name: str = None  # synth's name
         self.effects: Dict[
             str, Tuple[List[str], List[str]]] = dict()  # effect_name, list of formal_params, seq of effects
-        self.notes: Dict[str, SynthNote] = dict()  # defined notes
+        self.notes: Dict[str, SynthClip] = dict()  # defined notes
 
     @staticmethod
     def read_yaml(filename: str):
@@ -98,7 +98,7 @@ class Synth:
             assert effect_name in set(self.effects.keys()).union(['sin', "fade_in_out"])
             params, effect_seq = self.effects[effect_name]
             assert len(params) == len(values)  # make sure the actual para and formal param matched there length
-            self.notes[note_key] = SynthNote(values, effect_name)
+            self.notes[note_key] = SynthClip(values, effect_name)
 
     def render_note(self, note_name: str, duration: float) -> np.ndarray:
         note = self.notes[note_name]  # get note data
@@ -113,7 +113,7 @@ class Synth:
             param = [name_space[p] if p in name_space else p for p in param]  # get param's value
             if name == "sin":  # apply effect
                 param.append(duration)
-                result = sin(*param)
+                result = gen_sine(*param)
             elif name == 'fade_in_out':
                 assert result is not None
                 result = fade_in_out(result)
