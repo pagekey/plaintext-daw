@@ -8,11 +8,47 @@ import re
 
 import numpy as np
 import yaml
-from .effects import sin, fade_in_out
+
+
+def fade_in_out(note: np.ndarray, in_rate=0.1, out_rate=0.9):
+    # This fade_in_out function sound not good.
+    # Will be modified soon.
+    assert type(note) == np.ndarray
+    note_length = len(note)
+
+    fade_in_end = int(note_length * in_rate)
+    fade_out_start = int(note_length * out_rate)
+    in_rate = np.arange(0, 1, 1 / fade_in_end)
+    out_rate = np.arange(1, 0, -1 / (note_length - fade_out_start))
+
+    note[:fade_in_end] *= in_rate
+    note[fade_out_start:] *= out_rate
+
+    return note
+
+
+def sin(base_freq: float, harmonic: int, duration: float, sample_rate: int = 44100):
+    # set up basic parameters
+    base_freq = float(base_freq)
+    harmonic = int(harmonic)
+    duration = float(duration)
+    sample_rate = int(sample_rate)
+
+    # set up time
+    t = np.arange(0, duration, 1 / sample_rate)
+    amp_sum = 0  # record amplitude's sum
+    note_wave = np.zeros_like(t)  # init np array
+    for i in range(0, harmonic):
+        # amp:  1 / (2 ** i), i= 0, 1, 2, ...
+        # freq: (2 ** i) * base_freq, i= 0, 1, 2, ...
+        amp_sum += 1 / (2 ** i)
+        note_wave += 1 / (2 ** i) * np.sin(2 ** i * base_freq * 2 * np.pi * t)
+
+    return note_wave / amp_sum
 
 
 @dataclass
-class Note:
+class SynthNote:
     params: List[str]  # parameters this note can provide
     effect: str  # effect name
 
@@ -22,7 +58,7 @@ class Synth:
         self.name: str = None  # synth's name
         self.effects: Dict[
             str, Tuple[List[str], List[str]]] = dict()  # effect_name, list of formal_params, seq of effects
-        self.notes: Dict[str, Note] = dict()  # defined notes
+        self.notes: Dict[str, SynthNote] = dict()  # defined notes
 
     @staticmethod
     def read_yaml(filename: str):
@@ -62,7 +98,7 @@ class Synth:
             assert effect_name in set(self.effects.keys()).union(['sin', "fade_in_out"])
             params, effect_seq = self.effects[effect_name]
             assert len(params) == len(values)  # make sure the actual para and formal param matched there length
-            self.notes[note_key] = Note(values, effect_name)
+            self.notes[note_key] = SynthNote(values, effect_name)
 
     def render_note(self, note_name: str, duration: float) -> np.ndarray:
         note = self.notes[note_name]  # get note data

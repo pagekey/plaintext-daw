@@ -3,7 +3,7 @@
 # @Author  : LTstrange
 import numpy as np
 
-from plaintext_daw.models.synth.models import Synth, Note
+from plaintext_daw.models.synth import Synth, SynthNote
 
 
 class TestSynth:
@@ -14,7 +14,7 @@ class TestSynth:
         assert instrument.notes == dict()
 
     def test_read_from_yaml(self):
-        instrument = Synth.read_yaml("plaintext_daw/models/synth/synth.yml")
+        instrument = Synth.read_yaml("test/data/synth.yml")
         assert instrument.name is not None
         assert len(instrument.notes) != 0
 
@@ -39,7 +39,7 @@ class TestSynth:
         notes = {"C": "Note(65.406)"}
         instrument.set_notes(notes)
 
-        assert instrument.notes == {"C": Note(["65.406"], "Note")}
+        assert instrument.notes == {"C": SynthNote(["65.406"], "Note")}
 
     def test_render_notes(self):
         instrument = Synth()
