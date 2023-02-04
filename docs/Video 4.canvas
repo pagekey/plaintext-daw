@@ -1,21 +1,23 @@
 {
 	"nodes":[
+		{"id":"28862f2b0ae8e5bd","x":-199,"y":54,"width":250,"height":60,"type":"text","text":"Synthesizer output\nLTstrange"},
 		{"id":"a0187f3ca786ef60","x":-232,"y":-290,"width":315,"height":60,"type":"text","text":"# plaintext-daw 4"},
 		{"id":"7085c490b5432cbb","x":-199,"y":-126,"width":250,"height":60,"color":"2","type":"text","text":"Demo"},
 		{"id":"786091db5a5ca45b","x":-199,"y":-203,"width":250,"height":60,"color":"1","type":"text","text":"CTA: Join us!\nDiscord link in description"},
 		{"id":"9cbcc92d4c0d2f5e","x":-199,"y":-66,"width":250,"height":60,"type":"text","text":"Basic GUI\nLTstrange"},
 		{"id":"a49e87c8ee73028a","x":-199,"y":-6,"width":250,"height":60,"type":"text","text":"Chords, Rhythm output\nSteve"},
-		{"id":"28862f2b0ae8e5bd","x":-199,"y":54,"width":250,"height":60,"type":"text","text":"Synthesizer output\nLTstrange"},
 		{"id":"15d211a94aad7285","x":-324,"y":214,"width":250,"height":60,"type":"text","text":"Open Project Dialog\nLTstrange"},
 		{"id":"7c1df30a480c08e1","x":-74,"y":214,"width":250,"height":60,"type":"text","text":"Integrate Synthesizer\nLTstrange / Steve"},
-		{"id":"9bd34679904a3725","x":-324,"y":274,"width":250,"height":60,"type":"text","text":"Chords, tempo support\nSteve"},
-		{"id":"4549d2fc42eb1094","x":-74,"y":274,"width":250,"height":60,"type":"text","text":"Instrument loader\nLTstrange / Steve"},
 		{"id":"905b65a264a0d6db","x":-74,"y":154,"width":250,"height":60,"color":"3","type":"text","text":"What's next?"},
 		{"id":"54ab5d96d421c0be","x":-324,"y":154,"width":250,"height":60,"color":"4","type":"text","text":"What's new?"},
+		{"id":"9bd34679904a3725","x":-324,"y":274,"width":250,"height":60,"type":"text","text":"Chords, tempo support\nSteve"},
+		{"id":"4549d2fc42eb1094","x":-74,"y":274,"width":250,"height":60,"type":"text","text":"Instrument loader\nLTstrange / Steve"},
 		{"id":"1c7f67dbcb114039","x":-203,"y":373,"width":259,"height":60,"color":"5","type":"text","text":"Code Walkthrough"},
 		{"id":"e6156aced2ca7080","x":-203,"y":433,"width":259,"height":60,"type":"text","text":"[#2](https://github.com/pagekeytech/plaintext-daw/pull/2) Add a GUI\nLTstrange"},
 		{"id":"232d771c43e0748b","x":-203,"y":493,"width":259,"height":60,"type":"text","text":"[#4](https://github.com/pagekeytech/plaintext-daw/pull/4) Render tempo/chords\nSteve"},
-		{"id":"b1eec688d357f99b","x":-203,"y":553,"width":259,"height":60,"type":"text","text":"[#3](https://github.com/pagekeytech/plaintext-daw/pull/3) Synthesizer (draft)\nLTstrange"}
+		{"id":"b1eec688d357f99b","x":-203,"y":553,"width":259,"height":60,"type":"text","text":"[#3](https://github.com/pagekeytech/plaintext-daw/pull/3) Synthesizer (draft)\nLTstrange"},
+		{"id":"5e922e3da3c4c083","x":-290,"y":650,"width":434,"height":93,"type":"text","text":"Title:\nChords? Tempo? SYNTH?? | plaintext-daw 4"},
+		{"id":"5935a9cb97674901","x":-290,"y":771,"width":433,"height":288,"type":"text","text":"Timestamps\n0:00 Demo 1: Chords + Tempo\n0:18 Demo 1 Timing Issues\n1:04 Demo 2: Synth by LTstrange\n1:39 Join the Discord!\n2:04 Overview\n2:31 Roadmap, New ideas\n2:48 Demo: GUI\n3:06 Code: GUI\n3:31 Code: Render Tempo/Chords\n"}
 	],
 	"edges":[]
 }

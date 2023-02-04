@@ -13,29 +13,29 @@ class Song:
 
     def __init__(
         self,
-        path: str = '',
         bpm: int = 100,
         sample_rate: int = 44100,
         clips: List[Clip] = [],
-        instruments: List[Instrument] = [],
-        patterns: List[Pattern] = [],
+        instruments: List[Instrument] = {},
+        patterns: List[Pattern] = {},
+        config_dir: str = '.',
     ):
-        self.path = path
         self.bpm = bpm
         self.sample_rate = sample_rate
         self.clips = clips
         self.instruments = instruments
         self.patterns = patterns
+        self.config_dir = config_dir
 
     @staticmethod
-    def from_dict(dict):
+    def from_dict(dict, config_dir):
         return Song(
-            path=dict['path'] if 'path' in dict else None,
             bpm=dict['bpm'] if 'bpm' in dict else None,
             sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
-            clips=[Clip.from_dict(elem) for elem in dict['clips']] if 'clips' in dict else None,
-            instruments={key: Instrument.from_dict(elem) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
+            clips=[Clip.from_dict(elem, config_dir) for elem in dict['clips']] if 'clips' in dict else None,
+            instruments={key: Instrument.from_dict(elem, config_dir) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
             patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
+            config_dir=config_dir,
         )
 
     def render(self, out_filename: str):
@@ -52,19 +52,26 @@ class Song:
         
         # Allocate an np array for the entire song
         song_data = np.zeros(1)
+        
+        # TODO support more options than just these defaults
+        channels = 1
+        sample_width = 2
+        sample_rate = self.sample_rate
+        
         for note in all_notes:
             # Get the raw audio data for this note
             instrument = self.instruments[pattern.instrument]
-            clip_path = instrument.clips[note.value].path
-            clip_np, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.path, clip_path))
-            # Compute sample start/end
-            start = note.get_start_sample(self.sample_rate, self.bpm)
-            end = start + len(clip_np)
-            # If end is past the song end, pad out the rest of the song with zeros
-            num_new_samples = end - len(song_data)
-            if num_new_samples > 0:
-                song_data = np.pad(song_data, (0, num_new_samples))
-            # Put it in the song at the right place
-            song_data[start:end] += clip_np
+            clip = instrument.get_clip(note.value)
+            if clip is not None: # only render note if found
+                clip_np, channels, sample_width, sample_rate = clip.to_np()
+                # Compute sample start/end
+                start = note.get_start_sample(self.sample_rate, self.bpm)
+                end = start + len(clip_np)
+                # If end is past the song end, pad out the rest of the song with zeros
+                num_new_samples = end - len(song_data)
+                if num_new_samples > 0:
+                    song_data = np.pad(song_data, (0, num_new_samples))
+                # Put it in the song at the right place
+                song_data[start:end] += clip_np
 
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)
