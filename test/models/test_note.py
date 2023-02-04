@@ -25,12 +25,11 @@ class TestNote:
 
     def test_start_end_sample_complex(self):
         note = Note(value='a', start_beat=0.5, length=2)
-        # regardless of anything else, if it starts on beat 0, it starts on sample 0
-        assert note.get_start_sample(44100, 120) == (120/60)*44100*0.5
-        assert note.get_end_sample(44100, 120) == (120/60)*44100*2.5
+        assert note.get_start_sample(44100, 60) == 44100 * 0.5
+        assert note.get_end_sample(44100, 60) == 44100*2.5
 
-        assert note.get_start_sample(48000, 120) == (120/60)*48000*0.5
-        assert note.get_end_sample(48000, 120) == (120/60)*48000*2.5
+        assert note.get_start_sample(48000, 60) == 48000*0.5
+        assert note.get_end_sample(48000, 60) == 48000*2.5
         note.length = 3
-        assert note.get_start_sample(48000, 120) == (120/60)*48000*0.5
-        assert note.get_end_sample(48000, 120) == (120/60)*48000*3.5
+        assert note.get_start_sample(48000, 60) == 48000*0.5
+        assert note.get_end_sample(48000, 60) == 48000*3.5

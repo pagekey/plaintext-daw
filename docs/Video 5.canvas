@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"a312a6b2b07db940","x":-125,"y":-510,"width":250,"height":60,"color":"2","type":"text","text":"Demo"},
+		{"id":"ff211aaae5eb4502","x":-125,"y":-450,"width":250,"height":60,"type":"text","text":"song2: Saints Go Marching"},
+		{"id":"50ffca0b062e97f2","x":-125,"y":-587,"width":250,"height":60,"color":"1","type":"text","text":"CTA: Join us!\nDiscord link in description"},
+		{"id":"309998968a2cce52","x":-158,"y":-674,"width":315,"height":60,"type":"text","text":"# plaintext-daw 5"},
+		{"id":"20230a199fa801c7","x":-250,"y":-354,"width":250,"height":60,"color":"4","type":"text","text":"What's new?"},
+		{"id":"a56222f76d8ef806","x":0,"y":-354,"width":250,"height":60,"color":"3","type":"text","text":"What's next?"},
+		{"id":"6c95a22f015102c0","x":0,"y":-294,"width":250,"height":60,"type":"text","text":"Integrate Synthesizer\nLTstrange / Steve"},
+		{"id":"6b188da29cb85f72","x":-250,"y":-234,"width":250,"height":60,"type":"text","text":"Loaded instrument from Git repo"},
+		{"id":"fe4720887a817557","x":-250,"y":-174,"width":250,"height":60,"type":"text","text":"Fixed BPM calculation"},
+		{"id":"780fa673dd829979","x":-249,"y":-294,"width":250,"height":60,"type":"text","text":"Racked up some serious code debt (Steve)"},
+		{"id":"fceb488c1c0a6f22","x":-128,"y":-76,"width":259,"height":60,"color":"5","type":"text","text":"Code Walkthrough"}
+	],
+	"edges":[]
+}

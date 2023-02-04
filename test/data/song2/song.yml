@@ -1,0 +1,46 @@
+song:
+  bpm: 200
+  sample_rate: 44100
+  instruments:
+    piano:
+      source: GIT
+      name: piano
+      repo: git@github.com:pagekeytech/plaintext-daw-instruments
+      ref: master
+      path: piano/instrument.yml
+  patterns:
+    - name: pattern1
+      start: 1 # start measure
+      repeat: 0 # how many copies after the original one
+      instrument: piano
+      notes:
+        - value: C5
+          start_beat: 0
+          length: 2
+        - value: E5
+          start_beat: 1
+          length: 1
+        - value: F5
+          start_beat: 2
+          length: 1
+        - value: G5
+          start_beat: 3
+          length: 1
+        - value: C5
+          start_beat: 4
+          length: 1
+        - value: C5
+          start_beat: 4
+          length: 1
+        - value: E5
+          start_beat: 4
+          length: 1
+        - value: G5
+          start_beat: 5
+          length: 1
+        - value: C5
+          start_beat: 6
+          length: 1
+        - value: C5
+          start_beat: 7
+          length: 1
