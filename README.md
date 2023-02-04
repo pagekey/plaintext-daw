@@ -2,6 +2,14 @@
 
 A plaintext DAW
 
+## Video Series
+
+This project has been developed on video on the PageKey Tech YouTube channel. You can check the series out [here](https://www.youtube.com/watch?v=MguWfieR2tI&list=PL3Kz_hCNpKST2x-SzgbpYBeWOa74F40s7).
+
+## Discord
+
+[Join the Discord](https://discord.gg/5m5yFgDPF5) to discuss this project and connect with others!
+
 ## Pre-Requisites
 
 - You must have Git installed on your system and available in the PATH.
@@ -31,10 +39,6 @@ Type `plaintext-daw` on the command line to see usage instructions.
 ## Docs
 
 Open the `docs` folder as an Obsidian vault to view the documentation for this project.
-
-## YouTube Playlist
-
-Check out the [YouTube series](https://www.youtube.com/watch?v=MguWfieR2tI&list=PL3Kz_hCNpKST2x-SzgbpYBeWOa74F40s7) showing the development of this project.
 
 ## Attributions
 
