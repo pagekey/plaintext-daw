@@ -1,6 +1,6 @@
 *.egg-info
 __pycache__
-song.wav
+*.wav
 dist/
 build/
 .ptd_cache/
