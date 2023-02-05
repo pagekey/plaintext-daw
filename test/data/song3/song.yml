@@ -350,6 +350,12 @@ song:
         - value: C5
           start_beat: 4
           length: 1
+        - value: E5
+          start_beat: 4
+          length: 1
+        - value: G5
+          start_beat: 4
+          length: 1
         - value: G5
           start_beat: 5
           length: 1

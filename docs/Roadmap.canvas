@@ -21,7 +21,7 @@
 		{"id":"74a9d06c07749f05","x":2245,"y":536,"width":250,"height":60,"type":"text","text":"`Song`, `Clip`, `Instrument`, etc."},
 		{"id":"0b28b033f90801cc","x":2590,"y":536,"width":250,"height":60,"color":"5","type":"text","text":"# Renderer"},
 		{"id":"23335e987260ba80","x":2590,"y":687,"width":250,"height":60,"type":"text","text":"`Clips`\n(Add new clip type: raw)"},
-		{"id":"3635af63def0e86a","x":2055,"y":102,"width":250,"height":60,"type":"text","text":"Respect note length/end, fix tempo"},
+		{"id":"3635af63def0e86a","x":2055,"y":102,"width":250,"height":60,"color":"4","type":"text","text":"Respect note length/end, fix tempo"},
 		{"id":"f1ab7dc2f1481636","x":2410,"y":102,"width":250,"height":60,"type":"text","text":"Sync effects pipeline"},
 		{"id":"c2878ed99519afa7","x":2082,"y":297,"width":250,"height":60,"type":"text","text":"New architecture"},
 		{"id":"43f9207b4f2cdab3","x":2410,"y":297,"width":250,"height":60,"type":"text","text":"abc.js support - load files"},
