@@ -337,7 +337,7 @@ song:
       notes:
         - value: C5
           start_beat: 0
-          length: 2
+          length: 1
         - value: E5
           start_beat: 1
           length: 1
@@ -348,12 +348,6 @@ song:
           start_beat: 3
           length: 1
         - value: C5
-          start_beat: 4
-          length: 1
-        - value: C5
-          start_beat: 4
-          length: 1
-        - value: E5
           start_beat: 4
           length: 1
         - value: G5

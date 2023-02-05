@@ -31,4 +31,5 @@ class Note:
         sec_per_beat = 1/bps
         samples_per_beat = sample_rate * sec_per_beat
         len_sample = samples_per_beat * self.length
-        return int(self.get_start_sample(sample_rate, bpm) + len_sample)
+        start_sample = self.get_start_sample(sample_rate, bpm)
+        return int(start_sample + len_sample)

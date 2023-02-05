@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2023/1/30 22:49
-# @Author  : LTstrange
-
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 import re
