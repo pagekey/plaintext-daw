@@ -20,7 +20,7 @@ class Note:
 
     @staticmethod
     def beats_to_samples(beats, bpm, sample_rate):
-        return int(beats*(bpm/60)*sample_rate)
+        return int(beats*(60/bpm)*sample_rate)
 
     def get_start_sample(self, bpm, sample_rate):
         return Note.beats_to_samples(self.start_beat, bpm, sample_rate)
