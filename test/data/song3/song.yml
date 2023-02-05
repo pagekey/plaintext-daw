@@ -1,5 +1,5 @@
 song:
-  bpm: 100
+  bpm: 120
   sample_rate: 44100
   instruments:
     synth:

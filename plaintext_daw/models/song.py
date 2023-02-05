@@ -3,7 +3,7 @@ from typing import List
 
 import numpy as np
 
-from ..lib import np_to_wav, wav_to_np
+from ..lib import np_to_wav
 from .instrument import Instrument
 from .pattern import Pattern
 from .clip import Clip
@@ -66,16 +66,15 @@ class Song:
                 clip_np, channels, sample_width, sample_rate = clip.to_np()
                 # Compute sample start/end
                 start = note.get_start_sample(self.bpm, self.sample_rate)
-                end = start + note.get_end_sample(self.bpm, self.sample_rate)
+                end = note.get_end_sample(self.bpm, self.sample_rate)
                 # If end is past clip end, then make end at the clip end
                 if end-start > len(clip_np):
-                    end = start + len(clip_np) - 1
+                    end = start + len(clip_np)
                 # If end is past the song end, pad out the rest of the song with zeros
                 num_new_samples = end - len(song_data)
                 if num_new_samples > 0:
                     song_data = np.pad(song_data, (0, num_new_samples))
                 # Put it in the song at the right place
-                print(note.value,note.start_beat, note.start_beat + note.length, start,end,self.bpm, self.sample_rate)
                 song_data[start:end] += clip_np[0:end-start]
 
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)
