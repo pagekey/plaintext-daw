@@ -38,6 +38,11 @@ def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
     f_out.writeframes(audio_raw_int16)
 
 
+def mp3_to_np(mp3_path):
+    audio_normalized, sample_rate = soundfile.read(mp3_path)
+    return audio_normalized, sample_rate
+
+
 def np_to_mp3(song_np, sample_rate, mp3_path):
     # clamp value
     song_np = np.clip(song_np, -1.0, 1.0)
