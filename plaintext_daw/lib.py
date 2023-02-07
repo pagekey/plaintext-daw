@@ -1,8 +1,6 @@
-import os
 import wave
-import soundfile
-
 import numpy as np
+from pydub import AudioSegment
 
 MAX_INT16 = 2 ** 15
 
@@ -38,13 +36,15 @@ def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
     f_out.writeframes(audio_raw_int16)
 
 
-def mp3_to_np(mp3_path):
-    audio_normalized, sample_rate = soundfile.read(mp3_path)
-    return audio_normalized, sample_rate
+def mp3_to_np(mp3_path) -> (np.ndarray, int, int, int):
+    audio = AudioSegment.from_mp3(mp3_path)
+    channels = audio.channels
+    sample_width = audio.sample_width
+    sample_rate = audio.frame_rate
 
+    audio_float32 = np.array(audio.get_array_of_samples()).reshape((-1, channels)).astype(np.float32)
+    audio_normalized = audio_float32 / MAX_INT16
 
-def np_to_mp3(song_np, sample_rate, mp3_path):
-    # clamp value
-    song_np = np.clip(song_np, -1.0, 1.0)
+    return audio_normalized, channels, sample_width, sample_rate
 
     soundfile.write(mp3_path, song_np, sample_rate)
