@@ -1,0 +1,367 @@
+song:
+  bpm: 120
+  sample_rate: 44100
+  instruments:
+    synth:
+      # Source for frequencies: https://pages.mtu.edu/~suits/notefreqs.html
+      clips:
+        C0:
+          type: SINE
+          frequency: 16.35
+        C#0:
+          type: SINE
+          frequency: 17.32
+        D0:
+          type: SINE
+          frequency: 18.35
+        D#0:
+          type: SINE
+          frequency: 19.45
+        E0:
+          type: SINE
+          frequency: 20.6
+        F0:
+          type: SINE
+          frequency: 21.83
+        F#0:
+          type: SINE
+          frequency: 23.12
+        G0:
+          type: SINE
+          frequency: 24.5
+        G#0:
+          type: SINE
+          frequency: 25.96
+        A0:
+          type: SINE
+          frequency: 27.5
+        A#0:
+          type: SINE
+          frequency: 29.14
+        B0:
+          type: SINE
+          frequency: 30.87
+        C1:
+          type: SINE
+          frequency: 32.7
+        C#1:
+          type: SINE
+          frequency: 34.65
+        D1:
+          type: SINE
+          frequency: 36.71
+        D#1:
+          type: SINE
+          frequency: 38.89
+        E1:
+          type: SINE
+          frequency: 41.2
+        F1:
+          type: SINE
+          frequency: 43.65
+        F#1:
+          type: SINE
+          frequency: 46.25
+        G1:
+          type: SINE
+          frequency: 49
+        G#1:
+          type: SINE
+          frequency: 51.91
+        A1:
+          type: SINE
+          frequency: 55
+        A#1:
+          type: SINE
+          frequency: 58.27
+        B1:
+          type: SINE
+          frequency: 61.74
+        C2:
+          type: SINE
+          frequency: 65.41
+        C#2:
+          type: SINE
+          frequency: 69.3
+        D2:
+          type: SINE
+          frequency: 73.42
+        D#2:
+          type: SINE
+          frequency: 77.78
+        E2:
+          type: SINE
+          frequency: 82.41
+        F2:
+          type: SINE
+          frequency: 87.31
+        F#2:
+          type: SINE
+          frequency: 92.5
+        G2:
+          type: SINE
+          frequency: 98
+        G#2:
+          type: SINE
+          frequency: 103.83
+        A2:
+          type: SINE
+          frequency: 110
+        A#2:
+          type: SINE
+          frequency: 116.54
+        B2:
+          type: SINE
+          frequency: 123.47
+        C3:
+          type: SINE
+          frequency: 130.81
+        C#3:
+          type: SINE
+          frequency: 138.59
+        D3:
+          type: SINE
+          frequency: 146.83
+        D#3:
+          type: SINE
+          frequency: 155.56
+        E3:
+          type: SINE
+          frequency: 164.81
+        F3:
+          type: SINE
+          frequency: 174.61
+        F#3:
+          type: SINE
+          frequency: 185
+        G3:
+          type: SINE
+          frequency: 196
+        G#3:
+          type: SINE
+          frequency: 207.65
+        A3:
+          type: SINE
+          frequency: 220
+        A#3:
+          type: SINE
+          frequency: 233.08
+        B3:
+          type: SINE
+          frequency: 246.94
+        C4:
+          type: SINE
+          frequency: 261.63
+        C#4:
+          type: SINE
+          frequency: 277.18
+        D4:
+          type: SINE
+          frequency: 293.66
+        D#4:
+          type: SINE
+          frequency: 311.13
+        E4:
+          type: SINE
+          frequency: 329.63
+        F4:
+          type: SINE
+          frequency: 349.23
+        F#4:
+          type: SINE
+          frequency: 369.99
+        G4:
+          type: SINE
+          frequency: 392
+        G#4:
+          type: SINE
+          frequency: 415.3
+        A4:
+          type: SINE
+          frequency: 440
+        A#4:
+          type: SINE
+          frequency: 466.16
+        B4:
+          type: SINE
+          frequency: 493.88
+        C5:
+          type: SINE
+          frequency: 523.25
+        C#5:
+          type: SINE
+          frequency: 554.37
+        D5:
+          type: SINE
+          frequency: 587.33
+        D#5:
+          type: SINE
+          frequency: 622.25
+        E5:
+          type: SINE
+          frequency: 659.25
+        F5:
+          type: SINE
+          frequency: 698.46
+        F#5:
+          type: SINE
+          frequency: 739.99
+        G5:
+          type: SINE
+          frequency: 783.99
+        G#5:
+          type: SINE
+          frequency: 830.61
+        A5:
+          type: SINE
+          frequency: 880
+        A#5:
+          type: SINE
+          frequency: 932.33
+        B5:
+          type: SINE
+          frequency: 987.77
+        C6:
+          type: SINE
+          frequency: 1046.5
+        C#6:
+          type: SINE
+          frequency: 1108.73
+        D6:
+          type: SINE
+          frequency: 1174.66
+        D#6:
+          type: SINE
+          frequency: 1244.51
+        E6:
+          type: SINE
+          frequency: 1318.51
+        F6:
+          type: SINE
+          frequency: 1396.91
+        F#6:
+          type: SINE
+          frequency: 1479.98
+        G6:
+          type: SINE
+          frequency: 1567.98
+        G#6:
+          type: SINE
+          frequency: 1661.22
+        A6:
+          type: SINE
+          frequency: 1760
+        A#6:
+          type: SINE
+          frequency: 1864.66
+        B6:
+          type: SINE
+          frequency: 1975.53
+        C7:
+          type: SINE
+          frequency: 2093
+        C#7:
+          type: SINE
+          frequency: 2217.46
+        D7:
+          type: SINE
+          frequency: 2349.32
+        D#7:
+          type: SINE
+          frequency: 2489.02
+        E7:
+          type: SINE
+          frequency: 2637.02
+        F7:
+          type: SINE
+          frequency: 2793.83
+        F#7:
+          type: SINE
+          frequency: 2959.96
+        G7:
+          type: SINE
+          frequency: 3135.96
+        G#7:
+          type: SINE
+          frequency: 3322.44
+        A7:
+          type: SINE
+          frequency: 3520
+        A#7:
+          type: SINE
+          frequency: 3729.31
+        B7:
+          type: SINE
+          frequency: 3951.07
+        C8:
+          type: SINE
+          frequency: 4186.01
+        C#8:
+          type: SINE
+          frequency: 4434.92
+        D8:
+          type: SINE
+          frequency: 4698.63
+        D#8:
+          type: SINE
+          frequency: 4978.03
+        E8:
+          type: SINE
+          frequency: 5274.04
+        F8:
+          type: SINE
+          frequency: 5587.65
+        F#8:
+          type: SINE
+          frequency: 5919.91
+        G8:
+          type: SINE
+          frequency: 6271.93
+        G#8:
+          type: SINE
+          frequency: 6644.88
+        A8:
+          type: SINE
+          frequency: 7040
+        A#8:
+          type: SINE
+          frequency: 7458.62
+        B8:
+          type: SINE
+          frequency: 7902.13
+  patterns:
+    - name: pattern1
+      start: 1 # start measure
+      repeat: 0 # how many copies after the original one
+      instrument: synth
+      notes:
+        - value: C5
+          start_beat: 0
+          length: 1
+        - value: E5
+          start_beat: 1
+          length: 1
+        - value: F5
+          start_beat: 2
+          length: 1
+        - value: G5
+          start_beat: 3
+          length: 1
+        - value: C5
+          start_beat: 4
+          length: 1
+        - value: E5
+          start_beat: 4
+          length: 1
+        - value: G5
+          start_beat: 4
+          length: 1
+        - value: G5
+          start_beat: 5
+          length: 1
+        - value: C5
+          start_beat: 6
+          length: 1
+        - value: C5
+          start_beat: 7
+          length: 1

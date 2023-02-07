@@ -3,7 +3,7 @@
 # @Author  : LTstrange
 import numpy as np
 
-from plaintext_daw.models.synth import Synth, SynthNote
+from plaintext_daw.models.synth import Synth, SynthClip
 
 
 class TestSynth:
@@ -39,7 +39,7 @@ class TestSynth:
         notes = {"C": "Note(65.406)"}
         instrument.set_notes(notes)
 
-        assert instrument.notes == {"C": SynthNote(["65.406"], "Note")}
+        assert instrument.notes == {"C": SynthClip(["65.406"], "Note")}
 
     def test_render_notes(self):
         instrument = Synth()
