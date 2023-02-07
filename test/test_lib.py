@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2023/2/5 16:57
-# @Author  : LTstrange
 from plaintext_daw.lib import np_to_mp3
 from plaintext_daw.models.synth import sin
 import os
