@@ -1,5 +1,6 @@
 import os
 import wave
+import soundfile
 
 import numpy as np
 
@@ -35,3 +36,19 @@ def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
     f_out.setsampwidth(sample_width)
     f_out.setframerate(sample_rate)
     f_out.writeframes(audio_raw_int16)
+
+
+def mp3_to_np(mp3_path):
+    audio_normalized, sample_rate = soundfile.read(mp3_path)
+    return audio_normalized, sample_rate
+
+
+def np_to_mp3(song_np, sample_rate, mp3_path):
+    # clamp value
+    song_np = np.clip(song_np, -1.0, 1.0)
+
+    # Convert song to raw audio
+    audio_raw = song_np * MAX_INT16
+    audio_raw_int16 = audio_raw.astype(np.int16)
+
+    soundfile.write(mp3_path, audio_raw_int16, sample_rate)
