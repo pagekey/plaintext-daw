@@ -5,7 +5,7 @@ from pydub import AudioSegment
 MAX_INT16 = 2 ** 15
 
 
-def wav_to_np(wav_path) -> np.ndarray:
+def wav_to_np(wav_path) -> (np.ndarray, int, int, int):
     f = wave.open(wav_path)
     # Read metadata
     samples = f.getnframes()
