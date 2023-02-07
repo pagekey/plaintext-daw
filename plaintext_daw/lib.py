@@ -47,4 +47,13 @@ def mp3_to_np(mp3_path) -> (np.ndarray, int, int, int):
 
     return audio_normalized, channels, sample_width, sample_rate
 
-    soundfile.write(mp3_path, song_np, sample_rate)
+
+def np_to_mp3(song_np: np.ndarray, sample_rate, mp3_path):
+    if len(song_np.shape) == 1:
+        song_np = song_np.reshape((-1, 1))
+    assert len(song_np.shape) == 2  # (sample_length, channels)
+    song_np *= MAX_INT16
+    song_np = song_np.astype(np.int16)
+    audio = AudioSegment(song_np.tobytes(), channels=song_np.shape[-1], frame_rate=sample_rate,
+                         sample_width=song_np.dtype.itemsize)
+    audio.export(mp3_path, format='mp3')
