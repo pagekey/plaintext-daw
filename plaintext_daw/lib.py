@@ -47,8 +47,4 @@ def np_to_mp3(song_np, sample_rate, mp3_path):
     # clamp value
     song_np = np.clip(song_np, -1.0, 1.0)
 
-    # Convert song to raw audio
-    audio_raw = song_np * MAX_INT16
-    audio_raw_int16 = audio_raw.astype(np.int16)
-
-    soundfile.write(mp3_path, audio_raw_int16, sample_rate)
+    soundfile.write(mp3_path, song_np, sample_rate)
