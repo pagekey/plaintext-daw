@@ -18,17 +18,13 @@ class Note:
             length=dict['length'] if 'length' in dict else None,
         )
 
-    def get_start_sample(self, sample_rate, bpm):
-        # sample_rate: samples per second
-        # bpm: beats per minute
-        bps = bpm / 60
-        sec_per_beat = 1/bps
-        samples_per_beat = sample_rate * sec_per_beat
-        return int(samples_per_beat * self.start_beat)
+    @staticmethod
+    def beats_to_samples(beats, bpm, sample_rate):
+        return int(beats*(60/bpm)*sample_rate)
 
-    def get_end_sample(self, sample_rate, bpm):
-        bps = bpm / 60
-        sec_per_beat = 1/bps
-        samples_per_beat = sample_rate * sec_per_beat
-        len_sample = samples_per_beat * self.length
-        return int(self.get_start_sample(sample_rate, bpm) + len_sample)
+    def get_start_sample(self, bpm, sample_rate):
+        return Note.beats_to_samples(self.start_beat, bpm, sample_rate)
+
+    def get_end_sample(self, bpm, sample_rate):
+        beat = self.start_beat + self.length
+        return Note.beats_to_samples(beat, bpm, sample_rate)
