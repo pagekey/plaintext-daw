@@ -16,6 +16,6 @@ setup(
         'numpy',
         'pyyaml',
         'PyQt5',
-        'soundfile',
+        "pydub",
     ],
 )
