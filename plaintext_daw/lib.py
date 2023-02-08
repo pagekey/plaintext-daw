@@ -1,13 +1,11 @@
-import os
 import wave
-import soundfile
-
 import numpy as np
+from pydub import AudioSegment
 
 MAX_INT16 = 2 ** 15
 
 
-def wav_to_np(wav_path) -> np.ndarray:
+def wav_to_np(wav_path) -> (np.ndarray, int, int, int):
     f = wave.open(wav_path)
     # Read metadata
     samples = f.getnframes()
@@ -38,17 +36,24 @@ def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
     f_out.writeframes(audio_raw_int16)
 
 
-def mp3_to_np(mp3_path):
-    audio_normalized, sample_rate = soundfile.read(mp3_path)
-    return audio_normalized, sample_rate
+def mp3_to_np(mp3_path) -> (np.ndarray, int, int, int):
+    audio = AudioSegment.from_mp3(mp3_path)
+    channels = audio.channels
+    sample_width = audio.sample_width
+    sample_rate = audio.frame_rate
+
+    audio_float32 = np.array(audio.get_array_of_samples()).reshape((-1, channels)).astype(np.float32)
+    audio_normalized = audio_float32 / MAX_INT16
+
+    return audio_normalized, channels, sample_width, sample_rate
 
 
-def np_to_mp3(song_np, sample_rate, mp3_path):
-    # clamp value
-    song_np = np.clip(song_np, -1.0, 1.0)
-
-    # Convert song to raw audio
-    audio_raw = song_np * MAX_INT16
-    audio_raw_int16 = audio_raw.astype(np.int16)
-
-    soundfile.write(mp3_path, audio_raw_int16, sample_rate)
+def np_to_mp3(song_np: np.ndarray, sample_rate, mp3_path):
+    if len(song_np.shape) == 1:
+        song_np = song_np.reshape((-1, 1))
+    assert len(song_np.shape) == 2  # (sample_length, channels)
+    song_np *= MAX_INT16
+    song_np = song_np.astype(np.int16)
+    audio = AudioSegment(song_np.tobytes(), channels=song_np.shape[-1], frame_rate=sample_rate,
+                         sample_width=song_np.dtype.itemsize)
+    audio.export(mp3_path, format='mp3')

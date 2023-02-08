@@ -24,4 +24,6 @@ jobs:
           pip install pytest pytest-cov
       - name: Test with pytest
         run: |
+          sudo apt-get update
+          sudo apt install ffmpeg
           pytest --cov=plaintext_daw

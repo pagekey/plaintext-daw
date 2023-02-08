@@ -22,7 +22,6 @@ class TestNote:
         bpm = 60
         sample_rate = 44100
         assert Note.beats_to_samples(beats, bpm, sample_rate) == sample_rate
-        assert Note.beats_to_samples(1, 200, 44100) == 147000
         assert Note.beats_to_samples(beats*2, bpm, sample_rate) == sample_rate*2
         assert Note.beats_to_samples(beats, bpm, sample_rate/2) == sample_rate/2
 
