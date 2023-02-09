@@ -13,19 +13,27 @@ class Wave:
         self.primitive_waves = primitive_waves
 
 
-@dataclass
 class Range:
-    length: float  # ms
+    def __init__(self, duration: float):
+        """
+        duration: time in ms
+        """
+        self.duration = duration  # time in ms
 
 
 class Envelope:
-    ...
+    def __call__(self, wave: Wave, time_range: Range):
+        raise NotImplementedError
 
 
-@dataclass
+
+
 class Clip:
-    wave: Wave
-    envelope: Envelope
+    def __init__(self, source: Wave, envelope: Envelope, sample_rate, time_range: Range = None):
+        self.source = source
+        self.envelope = envelope
+        self.sample_rate = sample_rate
+        self.time_range = time_range
 
 
 @dataclass
