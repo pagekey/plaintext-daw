@@ -1,6 +1,7 @@
 from unittest.mock import call, patch
 import numpy as np
 import pytest
+from plaintext_daw.models.instrument import Instrument
 
 from plaintext_daw.resource_manager import ResourceManager
 
@@ -107,8 +108,20 @@ class TestResourceManager:
             with pytest.raises(ValueError):
                 self.rm.get_clip(bad_cfg)
 
-    def test_get_instrument(self):
-        pass
+    @patch.object(ResourceManager, 'get_clip')
+    def test_get_instrument(self, mock_get_clip):
+        clips_dict = {
+            'A0': {'path': 'path/to/A0.wav'},
+            'C5': {'path': 'path/to/C5.wav'},
+        }
+        instrument = self.rm.get_instrument({
+            'clips': clips_dict,
+        })
+        assert isinstance(instrument, Instrument)
+        mock_get_clip.assert_has_calls([
+            call(clips_dict['A0']),
+            call(clips_dict['C5']),
+        ])
 
     def test_get_pattern(self):
         pass
