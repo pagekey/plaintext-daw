@@ -1,3 +1,4 @@
+from unittest.mock import call, patch
 import numpy as np
 import pytest
 
@@ -64,16 +65,46 @@ class TestResourceManager:
             with pytest.raises(ValueError):
                 self.rm.get_clip(bad_cfg)
 
-    def test_get_song(self):
+    @patch.object(ResourceManager, 'get_instrument')
+    @patch.object(ResourceManager, 'get_pattern')
+    @patch.object(ResourceManager, 'get_sample')
+    def test_get_song(self, mock_get_sample, mock_get_pattern, mock_get_instrument):
         with pytest.raises(ValueError):
             self.rm.get_song({'bpm': 100})
         
+        ins_dict = {
+            'myins': {'field': 'hello'},
+            'yourins': {'name': 'insurance??'},
+        }
+        pattern_dict = {
+            'pattern': {'hey': 'there'},
+            'other': {'angle': 'momentum'},
+        }
+        clip_dict = {
+            'costco': {'pancake': 'wait'},
+            'walmart': {'no': 'free samples'},
+        }
         song = self.rm.get_song({
             'bpm': 100,
             'sample_rate': 44100,
+            'instruments': ins_dict,
+            'patterns': pattern_dict,
+            'clips': clip_dict,
         })
         assert song.bpm == 100
         assert song.sample_rate == 44100
+        mock_get_instrument.assert_has_calls([
+            call(ins_dict['myins']),
+            call(ins_dict['yourins']),
+        ])
+        mock_get_pattern.assert_has_calls([
+            call(pattern_dict['pattern']),
+            call(pattern_dict['other']),
+        ])
+        mock_get_sample.assert_has_calls([
+            call(clip_dict['costco']),
+            call(clip_dict['walmart']),
+        ])
 
     def test_get_instrument(self):
         pass

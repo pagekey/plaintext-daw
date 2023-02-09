@@ -1,6 +1,7 @@
 song:
   bpm: 200
   sample_rate: 44100
+  clips: {}
   instruments:
     piano:
       source: GIT

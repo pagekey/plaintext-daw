@@ -1,8 +1,9 @@
 song:
   bpm: 100
   sample_rate: 44100
-  samples:
-    - path: voice/clip1.wav
+  clips:
+    clip1:
+      path: voice/clip1.wav
       start: 2 # start on measure 2
   instruments:
     piano:
@@ -12,7 +13,8 @@ song:
         c:
           path: piano/Piano-C5.ogg.wav
   patterns:
-    - name: pattern1
+    pattern1:
+      name: pattern1
       start: 1 # start measure
       repeat: 0 # how many copies after the original one
       instrument: piano

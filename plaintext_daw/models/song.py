@@ -1,5 +1,4 @@
-import os
-from typing import List
+from typing import Dict
 
 import numpy as np
 
@@ -13,30 +12,14 @@ class Song:
 
     def __init__(
         self,
-        bpm: int = 100,
-        sample_rate: int = 44100,
-        clips: List[Clip] = [],
-        instruments: List[Instrument] = {},
-        patterns: List[Pattern] = {},
-        config_dir: str = '.',
+        bpm: int,
+        sample_rate: int,
     ):
         self.bpm = bpm
         self.sample_rate = sample_rate
-        self.clips = clips
-        self.instruments = instruments
-        self.patterns = patterns
-        self.config_dir = config_dir
-
-    @staticmethod
-    def from_dict(dict, config_dir):
-        return Song(
-            bpm=dict['bpm'] if 'bpm' in dict else None,
-            sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
-            clips=[Clip.from_dict(elem, config_dir) for elem in dict['clips']] if 'clips' in dict else None,
-            instruments={key: Instrument.from_dict(elem, config_dir) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
-            patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
-            config_dir=config_dir,
-        )
+        self.instruments: Dict[str, Instrument] = {}
+        self.patterns: Dict[str, Pattern] = {}
+        self.clips: Dict[str, Clip] = {}
 
     def render(self, out_filename: str):
         # Aggregate notes into a single list
