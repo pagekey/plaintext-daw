@@ -3,7 +3,7 @@
 # @Author  : LTstrange
 from dataclasses import dataclass
 from typing import List
-
+import numpy as np
 
 from primitive_wave import PrimitiveWave
 
@@ -30,4 +30,4 @@ class Clip:
 
 @dataclass
 class RawClip:
-    ...
+    data: np.ndarray
