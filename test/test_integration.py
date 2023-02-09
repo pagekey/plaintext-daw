@@ -4,7 +4,7 @@ import numpy as np
 
 from plaintext_daw.cli import cli_entry_point
 from plaintext_daw.lib import np_to_wav
-from plaintext_daw.models.synthesizer.synth import Synth
+from plaintext_daw.models.synthesizer import Synthesizer
 
 
 def test_song1_render_local():
@@ -23,7 +23,7 @@ def test_synth(): # TODO integrate with existing CLI
     sample_rate = 44100  # hz
     sample_width = 2  # bytes
 
-    instrument = Synth.read_yaml("test/data/synth.yml")
+    instrument = Synthesizer.read_yaml("test/data/synth.yml")
 
     # Spring Festival overture
     note_arr = [('z', 1), ('e', 1), ('e', .5), ('d', .5),
