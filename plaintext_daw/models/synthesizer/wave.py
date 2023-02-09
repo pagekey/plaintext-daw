@@ -2,7 +2,6 @@
 # @Time    : 2023/2/9 16:09
 # @Author  : LTstrange
 
-from dataclasses import dataclass
 import numpy as np
 from enum import Enum
 from typing import List
@@ -12,9 +11,10 @@ class WaveType(Enum):
     sine = 1
 
 
-@dataclass
 class PrimitiveWave:
-    wave_type: WaveType
+    def __init__(self, wave_type: WaveType, amplitude: float):
+        self.wave_type = wave_type
+        self.amplitude = amplitude
 
     def render(self, duration: float, sample_length: int) -> np.ndarray:
         raise NotImplementedError
@@ -32,10 +32,10 @@ class Wave:
         return wave
 
 
-@dataclass
 class Sine(PrimitiveWave):
-    wave_type = WaveType.sine
-    base_freq: float
+    def __init__(self, base_freq: float, amplitude: float):
+        super().__init__(WaveType.sine, amplitude)
+        self.base_freq = base_freq
 
     def render(self, duration: float, sample_length: int):
         t = np.linspace(0, duration, sample_length)
