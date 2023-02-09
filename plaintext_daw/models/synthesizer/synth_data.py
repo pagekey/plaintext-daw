@@ -2,21 +2,15 @@
 # @Time    : 2023/2/9 15:14
 # @Author  : LTstrange
 from dataclasses import dataclass
-from enum import Enum
 from typing import List
 
 
-class WaveType(Enum):
-    sine = 1
+from primitive_wave import PrimitiveWave
 
 
-class PrimitiveWave:
-    wave_type: WaveType
-
-
-@dataclass
 class Wave:
-    primitive_waves: List[PrimitiveWave]
+    def __init__(self, primitive_waves: List[PrimitiveWave]):
+        self.primitive_waves = primitive_waves
 
 
 @dataclass
