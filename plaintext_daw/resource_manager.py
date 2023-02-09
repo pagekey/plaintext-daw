@@ -3,6 +3,7 @@ from plaintext_daw.lib import wav_to_np
 
 from plaintext_daw.models.clip import Clip
 from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
 from plaintext_daw.models.synth import gen_sine
 
@@ -53,10 +54,18 @@ class ResourceManager:
         return clip
 
     def get_instrument(self, config):
+        self.check_types(config, ['clips'])
         instrument = Instrument()
         for key, value in config['clips'].items():
             instrument.clips[key] = self.get_clip(value)
         return instrument
 
-    def get_pattern(self):
+    def get_pattern(self, config):
+        self.check_types(config, ['instrument', 'start', 'repeat'])
+        pattern = Pattern(config['instrument'], config['start'], config['repeat'])
+        for note_dict in config['notes']:
+            pattern.notes.append(self.get_note(note_dict))
+        return pattern
+
+    def get_note(self):
         pass

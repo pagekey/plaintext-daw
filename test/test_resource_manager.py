@@ -1,7 +1,10 @@
 from unittest.mock import call, patch
+
 import numpy as np
 import pytest
+
 from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.pattern import Pattern
 
 from plaintext_daw.resource_manager import ResourceManager
 
@@ -123,5 +126,25 @@ class TestResourceManager:
             call(clips_dict['C5']),
         ])
 
-    def test_get_pattern(self):
+    def test_get_instrument_git(self):
+        pass # TODO
+
+    @patch.object(ResourceManager, 'get_note')
+    def test_get_pattern(self, mock_get_note):
+        notes = [
+            {'value': 'A0', 'start': 0, 'length': 1},
+            {'value': 'A1', 'start': 1, 'length': 2},
+        ]
+        pattern = self.rm.get_pattern({
+            'instrument': 'piano',
+            'start': 12,
+            'repeat': 0,
+            'notes': notes,
+        })
+        assert isinstance(pattern, Pattern)
+        assert pattern.start == 12
+        assert pattern.repeat == 0
+        mock_get_note.assert_has_calls([call(n) for n in notes])
+
+    def test_get_note(self):
         pass

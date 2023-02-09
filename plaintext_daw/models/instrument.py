@@ -35,18 +35,6 @@ class Instrument:
         self.clips = clips
         self.config_dir = config_dir
 
-    @staticmethod
-    def from_dict(dict, config_dir):
-        return Instrument(
-            name=dict['name'] if 'name' in dict else None,
-            repo=dict['repo'] if 'repo' in dict else None,
-            ref=dict['ref'] if 'ref' in dict else None,
-            path=dict['path'] if 'path' in dict else None,
-            source=InstrumentSource[dict['source']] if 'source' in dict else None,
-            clips={key: Clip.from_dict(elem, config_dir) for key, elem in dict['clips'].items()} if 'clips' in dict else None,
-            config_dir=config_dir,
-        )
-
     def get_repo_name(self):
         return self.repo.split('/')[-1].replace('.git', '')
 
