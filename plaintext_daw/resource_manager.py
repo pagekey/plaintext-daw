@@ -16,6 +16,17 @@ class ResourceManager:
             if type not in config:
                 raise ValueError(f'Required field {type} not found in config')
 
+    def get_song(self, config):
+        self.check_types(config, ['bpm', 'sample_rate', 'clips', 'instruments', 'patterns'])
+        song = Song(config['bpm'], config['sample_rate'])
+        for key, value in config['clips'].items():
+            song.clips[key] = self.get_clip(value)
+        for key, value in config['instruments'].items():
+            song.instruments[key] = self.get_instrument(value)
+        for key, value in config['patterns'].items():
+            song.patterns[key] = self.get_pattern(value)
+        return song
+
     def get_clip(self, config):
         # check config here, fail if invalid
         self.check_types(config, ['type'])
@@ -40,23 +51,8 @@ class ResourceManager:
         )
         return clip
 
-
-    def get_song(self, config):
-        self.check_types(config, ['bpm', 'sample_rate', 'clips', 'instruments', 'patterns'])
-        song = Song(config['bpm'], config['sample_rate'])
-        for key, value in config['instruments'].items():
-            song.instruments[key] = self.get_instrument(value)
-        for key, value in config['patterns'].items():
-            song.patterns[key] = self.get_pattern(value)
-        for key, value in config['clips'].items():
-            song.clips[key] = self.get_sample(value)
-        return song
-
     def get_instrument(self):
         pass
 
     def get_pattern(self):
-        pass
-
-    def get_sample(self):
         pass
