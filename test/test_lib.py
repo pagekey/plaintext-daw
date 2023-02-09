@@ -1,5 +1,5 @@
 from plaintext_daw.lib import np_to_mp3
-from plaintext_daw.models.synth import gen_sine
+from plaintext_daw.models.synthesizer.synth import gen_sine
 import os
 
 

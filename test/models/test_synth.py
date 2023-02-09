@@ -3,7 +3,7 @@
 # @Author  : LTstrange
 import numpy as np
 
-from plaintext_daw.models.synth import Synth, SynthClip
+from plaintext_daw.models.synthesizer.synth import Synth, SynthClip
 
 
 class TestSynth:

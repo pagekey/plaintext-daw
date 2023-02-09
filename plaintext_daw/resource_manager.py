@@ -6,7 +6,7 @@ from plaintext_daw.models.instrument import Instrument
 from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
-from plaintext_daw.models.synth import gen_sine
+from plaintext_daw.models.synthesizer.synth import gen_sine
 
 
 class ResourceManager:
