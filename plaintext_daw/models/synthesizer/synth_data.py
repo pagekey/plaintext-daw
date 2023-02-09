@@ -43,8 +43,3 @@ class Clip:
         if self.time_range is None:
             raise "No Time Range defined. use `Clip.set_time_range()`"
         return self.envelope(self.source, self.time_range, sample_rate)
-
-
-@dataclass
-class RawClip:
-    data: np.ndarray
