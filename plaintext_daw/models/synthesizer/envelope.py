@@ -3,11 +3,11 @@
 # @Author  : LTstrange
 
 import numpy as np
-from synth_data import Wave, Range
+from .wave import Wave
 
 
 class Envelope:
-    def __call__(self, wave: Wave, time_range: Range, sample_rate: float):
+    def __call__(self, wave: Wave, duration: float, sample_rate: float):
         raise NotImplementedError
 
 
@@ -25,11 +25,11 @@ class ADSR(Envelope):
         self.sustain_level = sustain_level  # fraction
         self.release = release  # second
 
-    def __call__(self, wave: Wave, time_range: Range, sample_rate: int):
+    def __call__(self, wave: Wave, duration: float, sample_rate: int):
         # Calculate the length of each stage in samples
         attack_samples = int(self.attack * sample_rate)
         decay_samples = int(self.decay * sample_rate)
-        sustain = time_range.duration - self.attack - self.decay - self.release
+        sustain = duration - self.attack - self.decay - self.release
         sustain_samples = int(sustain * sample_rate) if sustain > 0 else 0
         release_samples = int(self.release * sample_rate)
 
@@ -47,5 +47,5 @@ class ADSR(Envelope):
         # Release stage
         envelope[-release_samples:] = np.linspace(self.sustain_level, 0, release_samples)
 
-        wave_samples = wave.render(time_range.duration, sample_length)
+        wave_samples = wave.render(duration, sample_length)
         return wave_samples * envelope

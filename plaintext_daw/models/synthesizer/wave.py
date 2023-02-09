@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2023/2/9 16:09
 # @Author  : LTstrange
-import math
-from dataclasses import dataclass
-from enum import Enum
 
+from dataclasses import dataclass
 import numpy as np
+from enum import Enum
+from typing import List
 
 
 class WaveType(Enum):
@@ -18,6 +18,18 @@ class PrimitiveWave:
 
     def render(self, duration: float, sample_length: int) -> np.ndarray:
         raise NotImplementedError
+
+
+class Wave:
+    def __init__(self, primitive_waves: List[PrimitiveWave]):
+        self.primitive_waves = primitive_waves
+
+    def render(self, duration: float, sample_length: int):
+        wave = np.zeros(sample_length)
+        for primitive in self.primitive_waves:
+            wave += primitive.render(duration, sample_length)
+
+        return wave
 
 
 @dataclass
