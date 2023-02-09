@@ -3,6 +3,7 @@ from plaintext_daw.lib import wav_to_np
 
 from plaintext_daw.models.clip import Clip
 from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
 from plaintext_daw.models.synth import gen_sine
@@ -67,5 +68,7 @@ class ResourceManager:
             pattern.notes.append(self.get_note(note_dict))
         return pattern
 
-    def get_note(self):
-        pass
+    def get_note(self, config):
+        self.check_types(config, ['value', 'start', 'length'])
+        note = Note(config['value'], config['start'], config['length'])
+        return note

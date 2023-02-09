@@ -2,9 +2,12 @@ from unittest.mock import call, patch
 
 import numpy as np
 import pytest
+from plaintext_daw.models.clip import Clip
 
 from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
+from plaintext_daw.models.song import Song
 
 from plaintext_daw.resource_manager import ResourceManager
 
@@ -52,6 +55,7 @@ class TestResourceManager:
             'instruments': ins_dict,
             'patterns': pattern_dict,
         })
+        assert isinstance(song, Song)
         assert song.bpm == 100
         assert song.sample_rate == 44100
         mock_get_clip.assert_has_calls([
@@ -82,6 +86,7 @@ class TestResourceManager:
             'path': wav_path,
         }
         clip = self.rm.get_clip(config)
+        assert isinstance(clip, Clip)
         assert isinstance(clip.data, np.ndarray)
         assert clip.channels == 1
         assert clip.sample_width == 2
@@ -98,6 +103,7 @@ class TestResourceManager:
             'length': 2,
         }
         clip = self.rm.get_clip(config)
+        assert isinstance(clip, Clip)
         assert isinstance(clip.data, np.ndarray)
         assert len(clip.data) == 5000 * 2 # sample_rate * length
         assert clip.channels == 1
@@ -146,5 +152,13 @@ class TestResourceManager:
         assert pattern.repeat == 0
         mock_get_note.assert_has_calls([call(n) for n in notes])
 
-    def test_get_note(self):
-        pass
+    def test_get_pattern(self):
+        note = self.rm.get_note({
+            'value': 'C5',
+            'start': 7,
+            'length': 3,
+        })
+        assert isinstance(note, Note)
+        assert note.value == 'C5'
+        assert note.start == 7
+        assert note.length == 3
