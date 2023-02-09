@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from plaintext_daw.models.clip import Clip
 
-from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.instrument import Instrument, InstrumentSource
 from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
@@ -127,6 +127,7 @@ class TestResourceManager:
             'clips': clips_dict,
         })
         assert isinstance(instrument, Instrument)
+        assert instrument.source == InstrumentSource.IN_PLACE
         mock_get_clip.assert_has_calls([
             call(clips_dict['A0']),
             call(clips_dict['C5']),
