@@ -12,6 +12,15 @@ class TestResourceManager:
     def test_working_dir(self):
         assert self.rm.working_dir == '.'
 
+    def test_check_types(self):
+        config = {
+            'foo': 'val1',
+            'bar': 'val2',
+        }
+        ResourceManager.check_types(config, ['foo', 'bar'])
+        with pytest.raises(ValueError, match='baz'):
+            ResourceManager.check_types(config, ['foo', 'bar', 'baz'])
+
     def test_get_clip_no_type(self):
         with pytest.raises(ValueError):
             self.rm.get_clip({})
@@ -55,6 +64,16 @@ class TestResourceManager:
             with pytest.raises(ValueError):
                 self.rm.get_clip(bad_cfg)
 
+    def test_get_song(self):
+        with pytest.raises(ValueError):
+            self.rm.get_song({'bpm': 100})
+        
+        song = self.rm.get_song({
+            'bpm': 100,
+            'sample_rate': 44100,
+        })
+        assert song.bpm == 100
+        assert song.sample_rate == 44100
 
     def test_get_instrument(self):
         pass
