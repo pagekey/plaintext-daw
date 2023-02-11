@@ -3,6 +3,8 @@ import sys
 
 import yaml
 
+from plaintext_daw.resource_manager import ResourceManager
+
 from .gui import gui
 from .models import Song
 
@@ -24,11 +26,10 @@ def cli_entry_point(args=sys.argv):
                     print("Error: %s not found" % config_path, file=sys.stderr)
                     sys.exit(1)
                 # Load config
-                config_dir = os.path.dirname(config_path)
-                with open(config_path, 'r') as f:
-                    raw_yaml = f.read()
-                config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
-                song = Song.from_dict(config['song'], config_dir)
+                rm = ResourceManager(os.path.dirname(config_path))
+                config = rm.get_config_from_file(os.path.basename(config_path))
+                breakpoint()
+                song = rm.get_song(config)
                 # Render song to file
                 song.render('song.wav')
             else:

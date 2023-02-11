@@ -106,4 +106,6 @@ class ResourceManager:
             subprocess.check_call(f'git checkout {ref}'.split())
 
     def get_config_from_file(self, path):
-        return yaml.safe_load(os.path.join(self.working_dir, path))
+        with open(os.path.join(self.working_dir, path)) as f:
+            config = yaml.safe_load(f)
+        return config
