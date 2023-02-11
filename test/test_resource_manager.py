@@ -191,3 +191,16 @@ class TestResourceManager:
         assert note.value == 'C5'
         assert note.start == 7
         assert note.length == 3
+
+    def test_clone_repo(self):
+        the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
+        self.rm.clone_repo(the_repo, 'master')
+
+    @patch('plaintext_daw.resource_manager.yaml.safe_load')
+    def test_get_config_from_file(self, mock_safe_load):
+        self.rm.get_config_from_file('file.yml')
+        mock_safe_load.assert_called_with('./file.yml')
+        self.rm.working_dir = 'hello'
+        self.rm.get_config_from_file('file.yml')
+        mock_safe_load.assert_called_with('hello/file.yml')
+        self.rm.working_dir = '.'

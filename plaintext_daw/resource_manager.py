@@ -1,6 +1,8 @@
 import os
-from plaintext_daw.lib import wav_to_np
 
+import yaml
+
+from plaintext_daw.lib import wav_to_np
 from plaintext_daw.models.clip import Clip
 from plaintext_daw.models.instrument import Instrument, InstrumentSource
 from plaintext_daw.models.note import Note
@@ -91,8 +93,8 @@ class ResourceManager:
         note = Note(config['value'], config['start'], config['length'])
         return note
 
-    def clone_repo(self):
+    def clone_repo(self, repo, ref):
         pass
 
-    def get_config_from_file(self):
-        pass
+    def get_config_from_file(self, path):
+        return yaml.safe_load(os.path.join(self.working_dir, path))
