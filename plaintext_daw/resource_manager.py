@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 import yaml
 
@@ -94,7 +95,15 @@ class ResourceManager:
         return note
 
     def clone_repo(self, repo, ref):
-        pass
+        cache_dir_path = os.path.join(self.working_dir, self.cache_dir)
+        os.makedirs(cache_dir_path, exist_ok=True)
+        os.chdir(cache_dir_path)
+        repo_name = os.path.basename(repo)
+        repo_path = os.path.join(cache_dir_path, repo_name)
+        if not os.path.exists(repo_path):
+            subprocess.check_call(f'git clone {repo}'.split())
+            os.chdir(repo_name)
+            subprocess.check_call(f'git checkout {ref}'.split())
 
     def get_config_from_file(self, path):
         return yaml.safe_load(os.path.join(self.working_dir, path))

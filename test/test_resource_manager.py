@@ -192,9 +192,25 @@ class TestResourceManager:
         assert note.start == 7
         assert note.length == 3
 
-    def test_clone_repo(self):
+    @patch('plaintext_daw.resource_manager.os.makedirs')
+    @patch('plaintext_daw.resource_manager.os.chdir')
+    @patch('plaintext_daw.resource_manager.os.path.exists', return_value=False)
+    @patch('plaintext_daw.resource_manager.subprocess.check_call')
+    def test_clone_repo(self, mock_check_call, mock_exists, mock_chdir, mock_makedirs):
         the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
+        self.rm.working_dir = 'wdir'
         self.rm.clone_repo(the_repo, 'master')
+        mock_makedirs.assert_called_with('wdir/.ptd-cache', exist_ok=True)
+        mock_chdir.assert_has_calls([
+            call('wdir/.ptd-cache'),
+            call('plaintext-daw-instruments'),
+        ])
+        mock_exists.assert_called_with('wdir/.ptd-cache/plaintext-daw-instruments')
+        mock_check_call.assert_has_calls([
+            call(['git', 'clone', the_repo]),
+            call(['git', 'checkout', 'master']),
+        ])
+        self.rm.working_dir = '.'
 
     @patch('plaintext_daw.resource_manager.yaml.safe_load')
     def test_get_config_from_file(self, mock_safe_load):
