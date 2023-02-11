@@ -93,13 +93,11 @@ class ResourceManager:
     def clone_repo(self, repo, ref):
         cache_dir_path = os.path.join(self.working_dir, self.cache_dir)
         os.makedirs(cache_dir_path, exist_ok=True)
-        os.chdir(cache_dir_path)
         repo_name = os.path.basename(repo)
         repo_path = os.path.join(cache_dir_path, repo_name)
         if not os.path.exists(repo_path):
-            subprocess.check_call(f'git clone {repo}'.split())
-            os.chdir(repo_name)
-            subprocess.check_call(f'git checkout {ref}'.split())
+            subprocess.check_call(f'git clone {repo}'.split(), cwd=cache_dir_path)
+            subprocess.check_call(f'git checkout {ref}'.split(), cwd=os.path.join(cache_dir_path, repo_name))
 
     def get_config_from_file(self, path):
         with open(os.path.join(self.working_dir, path)) as f:

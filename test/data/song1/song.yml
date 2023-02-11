@@ -3,7 +3,7 @@ sample_rate: 44100
 clips:
   clip1:
     path: voice/clip1.wav
-    start: 2 # start on measure 2
+    start: 2
 instruments:
   piano:
     type: wav
