@@ -40,11 +40,11 @@ class ResourceManager:
             self.check_types(config, ['path'])
             data, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.working_dir, config['path']))
         else: # config['type'] == 'synth':
-            self.check_types(config, ['frequency', 'sample_rate', 'length'])
-            data = gen_sine(config['frequency'], 1, config['length'], config['sample_rate'])
+            self.check_types(config, ['frequency'])
+            data = gen_sine(config['frequency'], 1, 1, 44100) # TODO/WARNING: hard-coded values, but going to switch to new synth api soon anyway
             channels = 1
             sample_width = 2
-            sample_rate = config['sample_rate']
+            sample_rate = 44100
 
         clip = Clip(
             data=data,
