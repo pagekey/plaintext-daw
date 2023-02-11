@@ -35,20 +35,16 @@ class ResourceManager:
         return song
 
     def get_clip(self, config):
-        # check config here, fail if invalid
-        self.check_types(config, ['type'])
-        if config['type'] == 'wav':
+        if 'path' in config: # config['type'] == 'wav':
             # load the binary data (WAV)
             self.check_types(config, ['path'])
             data, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.working_dir, config['path']))
-        elif config['type'] == 'synth':
+        else: # config['type'] == 'synth':
             self.check_types(config, ['frequency', 'sample_rate', 'length'])
             data = gen_sine(config['frequency'], 1, config['length'], config['sample_rate'])
             channels = 1
             sample_width = 2
             sample_rate = config['sample_rate']
-        else:
-            raise ValueError('Invalid clip type:', config['type'])
 
         clip = Clip(
             data=data,

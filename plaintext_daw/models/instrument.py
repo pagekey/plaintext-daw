@@ -20,12 +20,14 @@ class Instrument:
     def __init__(
         self, 
         source=InstrumentSource.IN_PLACE,
+        type='wav',
         repo='',
         ref='',
         path='',
     ):
         self.clips: Dict[str, Clip] = {}
         self.source = source
+        self.type = type
         self.repo = repo
         self.ref = ref
         self.path = path

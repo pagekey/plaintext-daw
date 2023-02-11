@@ -3,6 +3,7 @@ sample_rate: 44100
 clips: {}
 instruments:
   synth:
+    type: synth
     # Source for frequencies: https://pages.mtu.edu/~suits/notefreqs.html
     clips:
       C0:

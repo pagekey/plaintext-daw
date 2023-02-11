@@ -1,3 +1,4 @@
+from unittest import mock
 from unittest.mock import call, patch
 
 import numpy as np
@@ -128,6 +129,7 @@ class TestResourceManager:
         })
         assert isinstance(instrument, Instrument)
         assert instrument.source == InstrumentSource.IN_PLACE
+        assert instrument.type == 'wav'
         mock_get_clip.assert_has_calls([
             call(clips_dict['A0']),
             call(clips_dict['C5']),
@@ -214,9 +216,11 @@ class TestResourceManager:
 
     @patch('plaintext_daw.resource_manager.yaml.safe_load')
     def test_get_config_from_file(self, mock_safe_load):
-        self.rm.get_config_from_file('file.yml')
-        mock_safe_load.assert_called_with('./file.yml')
-        self.rm.working_dir = 'hello'
-        self.rm.get_config_from_file('file.yml')
-        mock_safe_load.assert_called_with('hello/file.yml')
-        self.rm.working_dir = '.'
+        mock_open = mock.mock_open(read_data='file data')
+        with mock.patch('builtins.open', mock_open):
+            self.rm.get_config_from_file('file.yml')
+            mock_open.assert_called_with('./file.yml')
+            self.rm.working_dir = 'hello'
+            self.rm.get_config_from_file('file.yml')
+            mock_open.assert_called_with('hello/file.yml')
+            self.rm.working_dir = '.'
