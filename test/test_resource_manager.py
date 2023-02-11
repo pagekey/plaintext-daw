@@ -134,7 +134,17 @@ class TestResourceManager:
         ])
 
     def test_get_instrument_git(self):
-        pass # TODO
+        the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
+        instrument = self.rm.get_instrument({
+            'source': 'GIT',
+            'repo': the_repo,
+            'ref': 'master',
+            'path': 'piano/instrument.yml',
+        })
+        assert instrument.source == InstrumentSource.GIT
+        assert instrument.repo == the_repo
+        assert instrument.ref == 'master'
+        assert instrument.path == 'piano/instrument.yml'
 
     @patch.object(ResourceManager, 'get_note')
     def test_get_pattern(self, mock_get_note):

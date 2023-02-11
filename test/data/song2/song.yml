@@ -5,7 +5,6 @@ song:
   instruments:
     piano:
       source: GIT
-      name: piano
       repo: git@github.com:pagekeytech/plaintext-daw-instruments
       ref: master
       path: piano/instrument.yml

@@ -17,9 +17,18 @@ class InstrumentSource(Enum):
 
 class Instrument:
     
-    def __init__(self, source=InstrumentSource.IN_PLACE):
+    def __init__(
+        self, 
+        source=InstrumentSource.IN_PLACE,
+        repo='',
+        ref='',
+        path='',
+    ):
         self.clips: Dict[str, Clip] = {}
         self.source = source
+        self.repo = repo
+        self.ref = ref
+        self.path = path
 
     def get_repo_name(self):
         return self.repo.split('/')[-1].replace('.git', '')
