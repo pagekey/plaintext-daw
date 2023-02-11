@@ -5,6 +5,10 @@ from pydub import AudioSegment
 MAX_INT16 = 2 ** 15
 
 
+def minmax_mapping(wave_data: np.ndarray) -> np.ndarray:
+    return 1.8 * wave_data / (np.max(wave_data) - np.min(wave_data))
+
+
 def wav_to_np(wav_path) -> (np.ndarray, int, int, int):
     f = wave.open(wav_path)
     # Read metadata
@@ -23,7 +27,7 @@ def wav_to_np(wav_path) -> (np.ndarray, int, int, int):
 
 def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
     # clamp value
-    song_np = np.clip(song_np, -1.0, 1.0)
+    song_np = minmax_mapping(song_np)
 
     # Convert song to raw audio
     audio_raw = song_np * MAX_INT16
@@ -52,6 +56,10 @@ def np_to_mp3(song_np: np.ndarray, sample_rate, mp3_path):
     if len(song_np.shape) == 1:
         song_np = song_np.reshape((-1, 1))
     assert len(song_np.shape) == 2  # (sample_length, channels)
+
+    # clamp value
+    song_np = minmax_mapping(song_np)
+
     song_np *= MAX_INT16
     song_np = song_np.astype(np.int16)
     audio = AudioSegment(song_np.tobytes(), channels=song_np.shape[-1], frame_rate=sample_rate,

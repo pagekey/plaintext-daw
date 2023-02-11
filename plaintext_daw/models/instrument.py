@@ -18,22 +18,17 @@ class InstrumentSource(Enum):
 class Instrument:
     
     def __init__(
-        self,
-        name: str = str(uuid.uuid4()),
-        repo: str = '',
-        ref: str = '',
-        path: str = '', # path within the git repo
-        source: InstrumentSource=InstrumentSource.IN_PLACE,
-        clips: Dict[str, Clip]={},
-        config_dir: str = '.',
+        self, 
+        source=InstrumentSource.IN_PLACE,
+        repo='',
+        ref='',
+        path='',
     ):
-        self.name = name
+        self.clips: Dict[str, Clip] = {}
+        self.source = source
         self.repo = repo
         self.ref = ref
         self.path = path
-        self.source = source
-        self.clips = clips
-        self.config_dir = config_dir
 
     def get_repo_name(self):
         return self.repo.split('/')[-1].replace('.git', '')

@@ -1,8 +1,11 @@
 import os
-from plaintext_daw.lib import wav_to_np
+import subprocess
 
+import yaml
+
+from plaintext_daw.lib import wav_to_np
 from plaintext_daw.models.clip import Clip
-from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.instrument import Instrument, InstrumentSource
 from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
@@ -10,8 +13,9 @@ from plaintext_daw.models.synthesizer.synth import gen_sine
 
 
 class ResourceManager:
-    def __init__(self, working_dir):
+    def __init__(self, working_dir, cache_dir='.ptd-cache'):
         self.working_dir = working_dir
+        self.cache_dir = cache_dir
 
     @staticmethod
     def check_types(config, types):
@@ -55,11 +59,28 @@ class ResourceManager:
         return clip
 
     def get_instrument(self, config):
-        self.check_types(config, ['clips'])
-        instrument = Instrument()
-        for key, value in config['clips'].items():
-            instrument.clips[key] = self.get_clip(value)
-        return instrument
+        if 'source' in config and config['source'] == 'GIT':
+            self.check_types(config, ['source', 'repo', 'ref', 'path'])
+            self.clone_repo(config['repo'], config['ref'])
+            repo_name = os.path.basename(config['repo']).replace('.git', '')
+            path_to_config = os.path.join(self.cache_dir, repo_name, config['path'])
+            config_home_area = os.path.dirname(path_to_config)
+            config_from_file = self.get_config_from_file(path_to_config)
+            instrument = Instrument(
+                source=InstrumentSource.GIT,
+                repo=config['repo'],
+                ref=config['ref'],
+                path=config['path'],
+            )
+            for key, value in config_from_file['clips'].items():
+                instrument.clips[key] = self.get_clip({'path': os.path.join(config_home_area, value['path'])})
+            return instrument
+        else:
+            self.check_types(config, ['clips'])
+            instrument = Instrument()
+            for key, value in config['clips'].items():
+                instrument.clips[key] = self.get_clip(value)
+            return instrument
 
     def get_pattern(self, config):
         self.check_types(config, ['instrument', 'start', 'repeat'])
@@ -72,3 +93,19 @@ class ResourceManager:
         self.check_types(config, ['value', 'start', 'length'])
         note = Note(config['value'], config['start'], config['length'])
         return note
+
+    def clone_repo(self, repo, ref):
+        cache_dir_path = os.path.join(self.working_dir, self.cache_dir)
+        os.makedirs(cache_dir_path, exist_ok=True)
+        os.chdir(cache_dir_path)
+        repo_name = os.path.basename(repo)
+        repo_path = os.path.join(cache_dir_path, repo_name)
+        if not os.path.exists(repo_path):
+            subprocess.check_call(f'git clone {repo}'.split())
+            os.chdir(repo_name)
+            subprocess.check_call(f'git checkout {ref}'.split())
+
+    def get_config_from_file(self, path):
+        with open(os.path.join(self.working_dir, path)) as f:
+            config = yaml.safe_load(f)
+        return config

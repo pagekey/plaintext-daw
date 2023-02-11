@@ -16,12 +16,12 @@ This project has been developed on video on the PageKey Tech YouTube channel. Yo
 
 - You must have Git LFS installed and configured for use.
 
-- You make sure `libsndfile` is installed, unless you are on Windows.
+- You make sure `ffmpeg` is installed.
 
 ```
-sudo apt install libsndfile-dev
-brew install libsndfile
-yum install libsndfile
+apt install ffmpeg
+brew install ffmpeg
+yum install ffmpeg
 ```
 
 ## Installation

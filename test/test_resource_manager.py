@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from plaintext_daw.models.clip import Clip
 
-from plaintext_daw.models.instrument import Instrument
+from plaintext_daw.models.instrument import Instrument, InstrumentSource
 from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
@@ -127,13 +127,42 @@ class TestResourceManager:
             'clips': clips_dict,
         })
         assert isinstance(instrument, Instrument)
+        assert instrument.source == InstrumentSource.IN_PLACE
         mock_get_clip.assert_has_calls([
             call(clips_dict['A0']),
             call(clips_dict['C5']),
         ])
 
-    def test_get_instrument_git(self):
-        pass # TODO
+    @patch.object(ResourceManager, 'clone_repo')
+    @patch.object(ResourceManager, 'get_config_from_file', return_value={
+        'clips': {
+            'A4': {
+                'path': 'samples/A4.wav',
+            },
+            'A#4': {
+                'path': 'samples/A#4.wav',
+            },
+        },
+    })
+    @patch.object(ResourceManager, 'get_clip')
+    def test_get_instrument_git(self, mock_get_clip, mock_get_config_from_file, mock_clone_repo):
+        the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
+        instrument = self.rm.get_instrument({
+            'source': 'GIT',
+            'repo': the_repo,
+            'ref': 'master',
+            'path': 'piano/instrument.yml',
+        })
+        assert instrument.source == InstrumentSource.GIT
+        assert instrument.repo == the_repo
+        assert instrument.ref == 'master'
+        assert instrument.path == 'piano/instrument.yml'
+        mock_clone_repo.assert_called_with(the_repo, 'master')
+        mock_get_config_from_file.assert_called_with('.ptd-cache/plaintext-daw-instruments/piano/instrument.yml')
+        mock_get_clip.assert_has_calls([
+            call({'path': '.ptd-cache/plaintext-daw-instruments/piano/samples/A4.wav'}),
+            call({'path': '.ptd-cache/plaintext-daw-instruments/piano/samples/A#4.wav'}),
+        ])
 
     @patch.object(ResourceManager, 'get_note')
     def test_get_pattern(self, mock_get_note):
@@ -162,3 +191,32 @@ class TestResourceManager:
         assert note.value == 'C5'
         assert note.start == 7
         assert note.length == 3
+
+    @patch('plaintext_daw.resource_manager.os.makedirs')
+    @patch('plaintext_daw.resource_manager.os.chdir')
+    @patch('plaintext_daw.resource_manager.os.path.exists', return_value=False)
+    @patch('plaintext_daw.resource_manager.subprocess.check_call')
+    def test_clone_repo(self, mock_check_call, mock_exists, mock_chdir, mock_makedirs):
+        the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
+        self.rm.working_dir = 'wdir'
+        self.rm.clone_repo(the_repo, 'master')
+        mock_makedirs.assert_called_with('wdir/.ptd-cache', exist_ok=True)
+        mock_chdir.assert_has_calls([
+            call('wdir/.ptd-cache'),
+            call('plaintext-daw-instruments'),
+        ])
+        mock_exists.assert_called_with('wdir/.ptd-cache/plaintext-daw-instruments')
+        mock_check_call.assert_has_calls([
+            call(['git', 'clone', the_repo]),
+            call(['git', 'checkout', 'master']),
+        ])
+        self.rm.working_dir = '.'
+
+    @patch('plaintext_daw.resource_manager.yaml.safe_load')
+    def test_get_config_from_file(self, mock_safe_load):
+        self.rm.get_config_from_file('file.yml')
+        mock_safe_load.assert_called_with('./file.yml')
+        self.rm.working_dir = 'hello'
+        self.rm.get_config_from_file('file.yml')
+        mock_safe_load.assert_called_with('hello/file.yml')
+        self.rm.working_dir = '.'

@@ -1,44 +1,44 @@
-song:
-  bpm: 100
-  sample_rate: 44100
-  clips:
-    clip1:
-      path: voice/clip1.wav
-      start: 2 # start on measure 2
-  instruments:
-    piano:
-      clips:
-        a:
-          path: piano/Piano-A5.ogg.wav
-        c:
-          path: piano/Piano-C5.ogg.wav
-  patterns:
-    pattern1:
-      instrument: piano
-      start: 1 # start measure
-      repeat: 0 # how many copies after the original one
-      notes:
-        - value: a
-          start: 0
-          length: 1
-        - value: c
-          start: 0
-          length: 2
-        - value: a
-          start: 0.25
-          length: 1
-        - value: c
-          start: 0.5
-          length: 1
-        - value: c
-          start: 0.75
-          length: 1
-        - value: a
-          start: 1
-          length: 1
-        - value: c
-          start: 1
-          length: 1
-        - value: a
-          start: 1.5
-          length: 1
+bpm: 100
+sample_rate: 44100
+clips:
+  clip1:
+    path: voice/clip1.wav
+    start: 2 # start on measure 2
+instruments:
+  piano:
+    type: wav/synth
+    clips:
+      a:
+        path: piano/Piano-A5.ogg.wav
+      c:
+        path: piano/Piano-C5.ogg.wav
+patterns:
+  pattern1:
+    instrument: piano
+    start: 1 # start measure
+    repeat: 0 # how many copies after the original one
+    notes:
+      - value: a
+        start: 0
+        length: 1
+      - value: c
+        start: 0
+        length: 2
+      - value: a
+        start: 0.25
+        length: 1
+      - value: c
+        start: 0.5
+        length: 1
+      - value: c
+        start: 0.75
+        length: 1
+      - value: a
+        start: 1
+        length: 1
+      - value: c
+        start: 1
+        length: 1
+      - value: a
+        start: 1.5
+        length: 1
