@@ -60,13 +60,17 @@ class ResourceManager:
             self.check_types(config, ['source', 'repo', 'ref', 'path'])
             self.clone_repo(config['repo'], config['ref'])
             repo_name = os.path.basename(config['repo']).replace('.git', '')
-            config_from_file = self.get_config_from_file(os.path.join(self.cache_dir, repo_name, config['path']))
+            path_to_config = os.path.join(self.cache_dir, repo_name, config['path'])
+            config_home_area = os.path.dirname(path_to_config)
+            config_from_file = self.get_config_from_file(path_to_config)
             instrument = Instrument(
                 source=InstrumentSource.GIT,
                 repo=config['repo'],
                 ref=config['ref'],
                 path=config['path'],
             )
+            for key, value in config_from_file['clips'].items():
+                instrument.clips[key] = self.get_clip({'path': os.path.join(config_home_area, value['path'])})
             return instrument
         else:
             self.check_types(config, ['clips'])

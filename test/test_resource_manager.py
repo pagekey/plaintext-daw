@@ -134,8 +134,18 @@ class TestResourceManager:
         ])
 
     @patch.object(ResourceManager, 'clone_repo')
-    @patch.object(ResourceManager, 'get_config_from_file')
-    def test_get_instrument_git(self, mock_get_config_from_file, mock_clone_repo):
+    @patch.object(ResourceManager, 'get_config_from_file', return_value={
+        'clips': {
+            'A4': {
+                'path': 'samples/A4.wav',
+            },
+            'A#4': {
+                'path': 'samples/A#4.wav',
+            },
+        },
+    })
+    @patch.object(ResourceManager, 'get_clip')
+    def test_get_instrument_git(self, mock_get_clip, mock_get_config_from_file, mock_clone_repo):
         the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
         instrument = self.rm.get_instrument({
             'source': 'GIT',
@@ -149,6 +159,10 @@ class TestResourceManager:
         assert instrument.path == 'piano/instrument.yml'
         mock_clone_repo.assert_called_with(the_repo, 'master')
         mock_get_config_from_file.assert_called_with('.ptd-cache/plaintext-daw-instruments/piano/instrument.yml')
+        mock_get_clip.assert_has_calls([
+            call({'path': '.ptd-cache/plaintext-daw-instruments/piano/samples/A4.wav'}),
+            call({'path': '.ptd-cache/plaintext-daw-instruments/piano/samples/A#4.wav'}),
+        ])
 
     @patch.object(ResourceManager, 'get_note')
     def test_get_pattern(self, mock_get_note):
