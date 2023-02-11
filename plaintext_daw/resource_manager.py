@@ -10,8 +10,9 @@ from plaintext_daw.models.synth import gen_sine
 
 
 class ResourceManager:
-    def __init__(self, working_dir):
+    def __init__(self, working_dir, cache_dir='.ptd-cache'):
         self.working_dir = working_dir
+        self.cache_dir = cache_dir
 
     @staticmethod
     def check_types(config, types):
@@ -57,6 +58,9 @@ class ResourceManager:
     def get_instrument(self, config):
         if 'source' in config and config['source'] == 'GIT':
             self.check_types(config, ['source', 'repo', 'ref', 'path'])
+            self.clone_repo(config['repo'], config['ref'])
+            repo_name = os.path.basename(config['repo']).replace('.git', '')
+            config_from_file = self.get_config_from_file(os.path.join(self.cache_dir, repo_name, config['path']))
             instrument = Instrument(
                 source=InstrumentSource.GIT,
                 repo=config['repo'],
@@ -82,3 +86,9 @@ class ResourceManager:
         self.check_types(config, ['value', 'start', 'length'])
         note = Note(config['value'], config['start'], config['length'])
         return note
+
+    def clone_repo(self):
+        pass
+
+    def get_config_from_file(self):
+        pass

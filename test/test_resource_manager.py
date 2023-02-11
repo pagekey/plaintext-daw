@@ -133,7 +133,9 @@ class TestResourceManager:
             call(clips_dict['C5']),
         ])
 
-    def test_get_instrument_git(self):
+    @patch.object(ResourceManager, 'clone_repo')
+    @patch.object(ResourceManager, 'get_config_from_file')
+    def test_get_instrument_git(self, mock_get_config_from_file, mock_clone_repo):
         the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
         instrument = self.rm.get_instrument({
             'source': 'GIT',
@@ -145,6 +147,8 @@ class TestResourceManager:
         assert instrument.repo == the_repo
         assert instrument.ref == 'master'
         assert instrument.path == 'piano/instrument.yml'
+        mock_clone_repo.assert_called_with(the_repo, 'master')
+        mock_get_config_from_file.assert_called_with('.ptd-cache/plaintext-daw-instruments/piano/instrument.yml')
 
     @patch.object(ResourceManager, 'get_note')
     def test_get_pattern(self, mock_get_note):
