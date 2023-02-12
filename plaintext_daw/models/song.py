@@ -1,5 +1,4 @@
-import os
-from typing import List
+from typing import Dict
 
 import numpy as np
 
@@ -13,37 +12,21 @@ class Song:
 
     def __init__(
         self,
-        bpm: int = 100,
-        sample_rate: int = 44100,
-        clips: List[Clip] = [],
-        instruments: List[Instrument] = {},
-        patterns: List[Pattern] = {},
-        config_dir: str = '.',
+        bpm: int,
+        sample_rate: int,
     ):
         self.bpm = bpm
         self.sample_rate = sample_rate
-        self.clips = clips
-        self.instruments = instruments
-        self.patterns = patterns
-        self.config_dir = config_dir
-
-    @staticmethod
-    def from_dict(dict, config_dir):
-        return Song(
-            bpm=dict['bpm'] if 'bpm' in dict else None,
-            sample_rate=dict['sample_rate'] if 'sample_rate' in dict else None,
-            clips=[Clip.from_dict(elem, config_dir) for elem in dict['clips']] if 'clips' in dict else None,
-            instruments={key: Instrument.from_dict(elem, config_dir) for key, elem in dict['instruments'].items()} if 'instruments' in dict else None,
-            patterns=[Pattern.from_dict(elem) for elem in dict['patterns']] if 'patterns' in dict else None,
-            config_dir=config_dir,
-        )
+        self.instruments: Dict[str, Instrument] = {}
+        self.patterns: Dict[str, Pattern] = {}
+        self.clips: Dict[str, Clip] = {}
 
     def render(self, out_filename: str):
         # Aggregate notes into a single list
         # Eventually, this approach will need to be upgraded when patterns have an offset too
         # For now, it works
         all_notes = []
-        for pattern in self.patterns:
+        for pattern_name, pattern in self.patterns.items():
             for note in pattern.notes:
                 all_notes.append(note)
         
@@ -63,19 +46,18 @@ class Song:
             instrument = self.instruments[pattern.instrument]
             clip = instrument.get_clip(note.value)
             if clip is not None: # only render note if found
-                clip_np, channels, sample_width, sample_rate = clip.to_np()
                 # Compute sample start/end
                 start = note.get_start_sample(self.bpm, self.sample_rate)
                 end = note.get_end_sample(self.bpm, self.sample_rate)
                 # If end is past clip end, then make end at the clip end
-                if end-start > len(clip_np):
-                    end = start + len(clip_np)
+                if end-start > len(clip.data):
+                    end = start + len(clip.data)
                 # If end is past the song end, pad out the rest of the song with zeros
                 num_new_samples = end - len(song_data)
                 if num_new_samples > 0:
                     song_data = np.pad(song_data, (0, num_new_samples))
                 # Put it in the song at the right place
-                song_data[start:end] += clip_np[0:end-start]
+                song_data[start:end] += clip.data[0:end-start]
         song_data[song_data > 1] = 1
         song_data[song_data < -1] = -1
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)
