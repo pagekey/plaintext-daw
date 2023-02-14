@@ -35,20 +35,16 @@ class ResourceManager:
         return song
 
     def get_clip(self, config):
-        # check config here, fail if invalid
-        self.check_types(config, ['type'])
-        if config['type'] == 'wav':
+        if 'path' in config: # config['type'] == 'wav':
             # load the binary data (WAV)
             self.check_types(config, ['path'])
             data, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.working_dir, config['path']))
-        elif config['type'] == 'synth':
-            self.check_types(config, ['frequency', 'sample_rate', 'length'])
-            data = gen_sine(config['frequency'], 1, config['length'], config['sample_rate'])
+        else: # config['type'] == 'synth':
+            self.check_types(config, ['frequency'])
+            data = gen_sine(config['frequency'], 1, 1, 44100) # TODO/WARNING: hard-coded values, but going to switch to new synth api soon anyway
             channels = 1
             sample_width = 2
-            sample_rate = config['sample_rate']
-        else:
-            raise ValueError('Invalid clip type:', config['type'])
+            sample_rate = 44100
 
         clip = Clip(
             data=data,
@@ -97,13 +93,11 @@ class ResourceManager:
     def clone_repo(self, repo, ref):
         cache_dir_path = os.path.join(self.working_dir, self.cache_dir)
         os.makedirs(cache_dir_path, exist_ok=True)
-        os.chdir(cache_dir_path)
         repo_name = os.path.basename(repo)
         repo_path = os.path.join(cache_dir_path, repo_name)
         if not os.path.exists(repo_path):
-            subprocess.check_call(f'git clone {repo}'.split())
-            os.chdir(repo_name)
-            subprocess.check_call(f'git checkout {ref}'.split())
+            subprocess.check_call(f'git clone {repo}'.split(), cwd=cache_dir_path)
+            subprocess.check_call(f'git checkout {ref}'.split(), cwd=os.path.join(cache_dir_path, repo_name))
 
     def get_config_from_file(self, path):
         with open(os.path.join(self.working_dir, path)) as f:

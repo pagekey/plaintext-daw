@@ -28,7 +28,6 @@ def cli_entry_point(args=sys.argv):
                 # Load config
                 rm = ResourceManager(os.path.dirname(config_path))
                 config = rm.get_config_from_file(os.path.basename(config_path))
-                breakpoint()
                 song = rm.get_song(config)
                 # Render song to file
                 song.render('song.wav')

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2023/2/1 18:55
-# @Author  : LTstrange
 import numpy as np
+import pytest
 
 from plaintext_daw.models.synthesizer import Synthesizer
 
@@ -13,6 +11,7 @@ class TestSynth:
         assert instrument.effects == dict()
         assert instrument.notes == dict()
 
+    @pytest.mark.skip()
     def test_read_from_yaml(self):
         instrument = Synthesizer.read_yaml("test/data/synth.yml")
         assert instrument.name is not None

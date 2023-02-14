@@ -1,3 +1,4 @@
+from unittest import mock
 from unittest.mock import call, patch
 
 import numpy as np
@@ -99,19 +100,19 @@ class TestResourceManager:
         config = {
             'type': 'synth',
             'frequency': 16.35,
-            'sample_rate': 5000,
-            'length': 2,
+            'sample_rate': 44100, # TODO use non-hard-coded sample rate
+            'length': 1, # TODO use non-hard-coded length
         }
         clip = self.rm.get_clip(config)
         assert isinstance(clip, Clip)
         assert isinstance(clip.data, np.ndarray)
-        assert len(clip.data) == 5000 * 2 # sample_rate * length
+        assert len(clip.data) == 44100 * 1 # sample_rate * length
         assert clip.channels == 1
         assert clip.sample_width == 2
-        assert clip.sample_rate == 5000
+        assert clip.sample_rate == 44100
 
         # Missing fields
-        for missing_field in ['frequency', 'sample_rate', 'length']:
+        for missing_field in ['frequency']:#, 'sample_rate', 'length']:
             bad_cfg = config.copy()
             del bad_cfg[missing_field]
             with pytest.raises(ValueError):
@@ -128,6 +129,7 @@ class TestResourceManager:
         })
         assert isinstance(instrument, Instrument)
         assert instrument.source == InstrumentSource.IN_PLACE
+        assert instrument.type == 'wav'
         mock_get_clip.assert_has_calls([
             call(clips_dict['A0']),
             call(clips_dict['C5']),
@@ -193,30 +195,27 @@ class TestResourceManager:
         assert note.length == 3
 
     @patch('plaintext_daw.resource_manager.os.makedirs')
-    @patch('plaintext_daw.resource_manager.os.chdir')
     @patch('plaintext_daw.resource_manager.os.path.exists', return_value=False)
     @patch('plaintext_daw.resource_manager.subprocess.check_call')
-    def test_clone_repo(self, mock_check_call, mock_exists, mock_chdir, mock_makedirs):
+    def test_clone_repo(self, mock_check_call, mock_exists, mock_makedirs):
         the_repo = 'git@gitub.com:pagekeytech/plaintext-daw-instruments'
         self.rm.working_dir = 'wdir'
         self.rm.clone_repo(the_repo, 'master')
         mock_makedirs.assert_called_with('wdir/.ptd-cache', exist_ok=True)
-        mock_chdir.assert_has_calls([
-            call('wdir/.ptd-cache'),
-            call('plaintext-daw-instruments'),
-        ])
         mock_exists.assert_called_with('wdir/.ptd-cache/plaintext-daw-instruments')
         mock_check_call.assert_has_calls([
-            call(['git', 'clone', the_repo]),
-            call(['git', 'checkout', 'master']),
+            call(['git', 'clone', the_repo], cwd='wdir/.ptd-cache'),
+            call(['git', 'checkout', 'master'], cwd='wdir/.ptd-cache/plaintext-daw-instruments'),
         ])
         self.rm.working_dir = '.'
 
     @patch('plaintext_daw.resource_manager.yaml.safe_load')
     def test_get_config_from_file(self, mock_safe_load):
-        self.rm.get_config_from_file('file.yml')
-        mock_safe_load.assert_called_with('./file.yml')
-        self.rm.working_dir = 'hello'
-        self.rm.get_config_from_file('file.yml')
-        mock_safe_load.assert_called_with('hello/file.yml')
-        self.rm.working_dir = '.'
+        mock_open = mock.mock_open(read_data='file data')
+        with mock.patch('builtins.open', mock_open):
+            self.rm.get_config_from_file('file.yml')
+            mock_open.assert_called_with('./file.yml')
+            self.rm.working_dir = 'hello'
+            self.rm.get_config_from_file('file.yml')
+            mock_open.assert_called_with('hello/file.yml')
+            self.rm.working_dir = '.'

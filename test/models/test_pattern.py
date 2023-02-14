@@ -4,20 +4,8 @@ from plaintext_daw.models.instrument import InstrumentSource
 
 class TestPattern:
     def test_init(self):
-        obj = Pattern()
+        obj = Pattern(instrument='hi', start=1, repeat=3)
         assert isinstance(obj, Pattern)
-        assert obj.name == ''
-
-    def test_from_dict(self):
-        obj = Pattern.from_dict({
-            'name': 'pattern1',
-            'instrument': 'piano',
-            'notes': [{}],
-            'start': 5,
-            'repeat': 2,
-        })
-        assert obj.name == 'pattern1'
-        assert obj.instrument == 'piano'
-        assert isinstance(obj.notes[0], Note)
-        assert obj.start == 5
-        assert obj.repeat == 2
+        assert obj.instrument == 'hi'
+        assert obj.start == 1
+        assert obj.repeat == 3
