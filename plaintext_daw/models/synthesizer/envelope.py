@@ -45,7 +45,8 @@ class ADSR(Envelope):
         # Sustain stage
         envelope[attack_samples + decay_samples:attack_samples + decay_samples + sustain_samples] = self.sustain_level
         # Release stage
-        envelope[-release_samples:] = np.linspace(self.sustain_level, 0, release_samples)
+        envelope[attack_samples + decay_samples + sustain_samples:] = np.linspace(self.sustain_level, 0,
+                                                                                  release_samples)
 
         wave_samples = wave.render(duration, sample_length)
         return wave_samples * envelope
