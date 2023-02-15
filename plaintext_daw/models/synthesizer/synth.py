@@ -29,10 +29,8 @@ class Synthesizer:
         return Clip(rawdata, 1, self.sample_rate)
 
     def __pipeline(self, actual_param: Dict[str, float]) -> RawClip:
-        print("pipeline:")
         result = None
         for effect in self.__effects:
-            print(effect)
             effect, form_param = re.match(r"(\w+)(?:\((.+)\))?", effect).groups()
             form_param = form_param.split(',')
             if effect == 'sin' and form_param[0] == 'frequency':
