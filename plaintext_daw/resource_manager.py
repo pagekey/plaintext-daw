@@ -65,11 +65,18 @@ class ResourceManager:
                 instrument.clips[key] = self.get_clip({'path': os.path.join(config_home_area, value['path'])})
             return instrument
         else:
-            self.check_types(config, ['clips'])
-            instrument = Instrument()
-            for key, value in config['clips'].items():
-                instrument.clips[key] = self.get_clip(value)
-            return instrument
+            self.check_types(config, ['clips', 'type'])
+            if config['type'] == 'synth':  # synthesizer
+                synth = Synthesizer(sample_rate=44100)
+                synth.set_clips(config['clips'])
+                self.check_types(config, ['pipeline'])
+                synth.set_pipeline(config['pipeline'])
+                return synth
+            else:  # wave clip
+                instrument = Instrument()
+                for key, value in config['clips'].items():
+                    instrument.clips[key] = self.get_clip(value)
+                return instrument
 
     def get_pattern(self, config):
         self.check_types(config, ['instrument', 'start', 'repeat'])
