@@ -6,7 +6,7 @@ instruments:
     type: synth
     pipeline:
       - sin(frequency)
-      - ADSR(0.1, 0, 1, 0.1)
+      - ADSR(0.1, 0.1, 0.7, 0.1)
     # Source for frequencies: https://pages.mtu.edu/~suits/notefreqs.html
     clips:
       C0:
