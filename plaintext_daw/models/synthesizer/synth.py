@@ -3,73 +3,41 @@ import re
 import numpy as np
 import yaml
 
-from .clip import Clip
+from .wave import Sine, Wave
+from .rawclip import RawClip
+from .envelope import ADSR
+
+from plaintext_daw.models import Clip, Note
 
 
 class Synthesizer:
-    def __init__(self):
-        self.name: str = None  # synthesizer's name
-        self.effects: Dict[
-            str, Tuple[List[str], List[str]]] = dict()  # effect_name, list of formal_params, seq of effects
-        self.notes: Dict[str, Clip] = dict()  # defined notes
+    def __init__(self, sample_rate):
+        self.sample_rate = sample_rate
+        self.__effects: list = []
+        self.__clips: Dict[str, Dict[str, float]] = dict()
 
-    @staticmethod
-    def read_yaml(filename: str):
-        with open(filename, 'r') as raw_yaml:
-            config = yaml.load(raw_yaml, Loader=yaml.SafeLoader)
+    def set_pipeline(self, config):
+        self.__effects = config
 
-        config = config['synth']
-        synth = Synthesizer()
-        synth.set_name(config['name'])
-        synth.set_effects(config['effects'] if 'effects' in config else None)
-        # load notes
-        synth.set_notes(config['notes'])
+    def set_clips(self, config: dict):
+        self.__clips = config
 
-        return synth
+    def get_clip(self, note: Note) -> Clip:
+        clip = self.__pipeline(self.__clips[note.value])
+        clip.set_duration(note.length)
+        rawdata = clip.render(self.sample_rate)
+        return Clip(rawdata, 1, self.sample_rate)
 
-    def set_name(self, name):
-        self.name = name
-
-    def set_effects(self, effects):
-        if effects is None:  # there can be no addition effects. (Only builtin effects)
-            return
-
-        for effect_key, effect_seq in effects.items():  # for each effect in config file
-            # separate out the name of effect and needed parameters
-            effect_name, param = re.match(r'([a-zA-Z]+)\((.*)\)', effect_key).groups()
-            param = [p.strip() for p in param.split(',')]
-            # effect definition is a seq of effect, sep by '|'
-            effect_seq = [e.strip() for e in effect_seq.split('|')]
-            self.effects[effect_name] = (param, effect_seq)
-
-    def set_notes(self, notes: Dict[str, str]):
-        for note_key, note_def in notes.items():  # for each key definition
-            # separate out the effect's name this note refer, and the value this note give
-            effect_name, values = re.match(r'([a-zA-Z]+)\((.*)\)', note_def).groups()
-            values = [v.strip() for v in values.split(',')]
-            # make sure the effect name is already defined
-            assert effect_name in set(self.effects.keys()).union(['sin', "fade_in_out"])
-            params, effect_seq = self.effects[effect_name]
-            assert len(params) == len(values)  # make sure the actual para and formal param matched there length
-            self.notes[note_key] = Clip(values, effect_name)
-
-    def render_note(self, note_name: str, duration: float) -> np.ndarray:
-        note = self.notes[note_name]  # get note data
-        formal_param, effect_seq = self.effects[note.effect]  # get effect data
-
-        name_space = dict(zip(formal_param, note.params))  # set a simple namespace
-
+    def __pipeline(self, actual_param: Dict[str, float]) -> RawClip:
+        print("pipeline:")
         result = None
-        for effect in effect_seq:  # apply each effect to generate np array
-            name, param = re.match(r'([a-zA-Z_]+)\((.*)\)', effect).groups()  # separate out effect's name and params
-            param = [p.strip() for p in param.split(',')]
-            param = [name_space[p] if p in name_space else p for p in param]  # get param's value
-            if name == "sin":  # apply effect
-                param.append(duration)
-                result = gen_sine(*param)
-            elif name == 'fade_in_out':
-                assert result is not None
-                result = fade_in_out(result)
-            else:
-                raise "Not defined effect"
+        for effect in self.__effects:
+            print(effect)
+            effect, form_param = re.match(r"(\w+)(?:\((.+)\))?", effect).groups()
+            form_param = form_param.split(',')
+            if effect == 'sin' and form_param[0] == 'frequency':
+                result = Wave([Sine(actual_param[form_param[0]], 1)])
+            elif effect == "ADSR" and len(form_param) == 4:
+                form_param = [float(p) for p in form_param]
+                result = RawClip(result, ADSR(*form_param))
         return result
