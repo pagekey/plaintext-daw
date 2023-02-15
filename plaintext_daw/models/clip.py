@@ -9,7 +9,6 @@ class Clip:
         channels: int,
         sample_rate: int,
     ):
-        self.type = type
         self.data = data
         self.channels = channels
         self.sample_rate = sample_rate
