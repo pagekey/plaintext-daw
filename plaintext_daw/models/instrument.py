@@ -33,4 +33,4 @@ class Instrument:
         self.path = path
 
     def get_clip(self, note):
-            return self.clips[note]
+        return self.clips[note.value]
