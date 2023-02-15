@@ -6,7 +6,7 @@ from .envelope import Envelope
 from .wave import Wave
 
 
-class Clip:
+class RawClip:
     def __init__(self, source: Wave, envelope: Envelope, duration: float = None):
         self.source = source
         self.envelope = envelope
