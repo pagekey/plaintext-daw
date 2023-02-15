@@ -7,10 +7,9 @@ from .wave import Wave
 
 
 class Clip:
-    def __init__(self, source: Wave, envelope: Envelope, sample_rate, duration: float = None):
+    def __init__(self, source: Wave, envelope: Envelope, duration: float = None):
         self.source = source
         self.envelope = envelope
-        self.sample_rate = sample_rate
         self.duration = duration
 
     def set_duration(self, duration: float):
