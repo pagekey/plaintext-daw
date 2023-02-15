@@ -15,14 +15,13 @@ def wav_to_np(wav_path) -> (np.ndarray, int, int, int):
     samples = f.getnframes()
     data = f.readframes(samples)
     channels = f.getnchannels()
-    sample_width = f.getsampwidth()
     sample_rate = f.getframerate()
     f.close()
     # Convert to normalized np array
     audio_int16 = np.frombuffer(data, dtype=np.int16)
     audio_float32 = audio_int16.astype(np.float32)
     audio_normalized = audio_float32 / MAX_INT16
-    return audio_normalized, channels, sample_width, sample_rate
+    return audio_normalized, channels, sample_rate
 
 
 def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
@@ -43,13 +42,12 @@ def np_to_wav(song_np, channels, sample_width, sample_rate, wav_path):
 def mp3_to_np(mp3_path) -> (np.ndarray, int, int, int):
     audio = AudioSegment.from_mp3(mp3_path)
     channels = audio.channels
-    sample_width = audio.sample_width
     sample_rate = audio.frame_rate
 
     audio_float32 = np.array(audio.get_array_of_samples()).reshape((-1, channels)).astype(np.float32)
     audio_normalized = audio_float32 / MAX_INT16
 
-    return audio_normalized, channels, sample_width, sample_rate
+    return audio_normalized, channels, sample_rate
 
 
 def np_to_mp3(song_np: np.ndarray, sample_rate, mp3_path):

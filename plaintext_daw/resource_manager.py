@@ -49,7 +49,6 @@ class ResourceManager:
         clip = Clip(
             data=data,
             channels=channels,
-            sample_width=sample_width,
             sample_rate=sample_rate,
         )
         return clip
