@@ -26,5 +26,5 @@ class Instrument:
         self.ref = ref
         self.path = path
 
-    def get_clip(self, note):
+    def get_clip(self, note, bpm):
         return self.clips[note.value]

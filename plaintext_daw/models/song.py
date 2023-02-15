@@ -44,7 +44,7 @@ class Song:
         for note in all_notes:
             # Get the raw audio data for this note
             instrument = self.instruments[pattern.instrument]
-            clip = instrument.get_clip(note)
+            clip = instrument.get_clip(note, self.bpm)
             if clip is not None: # only render note if found
                 # Compute sample start/end
                 start = note.get_start_sample(self.bpm, self.sample_rate)
