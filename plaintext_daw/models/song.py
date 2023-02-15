@@ -58,6 +58,4 @@ class Song:
                     song_data = np.pad(song_data, (0, num_new_samples))
                 # Put it in the song at the right place
                 song_data[start:end] += clip.data[0:end-start]
-        song_data[song_data > 1] = 1
-        song_data[song_data < -1] = -1
         np_to_wav(song_data, channels, sample_width, sample_rate, out_filename)
