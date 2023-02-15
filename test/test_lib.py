@@ -1,13 +1,16 @@
 from plaintext_daw.lib import np_to_mp3
-from plaintext_daw.models.synthesizer.synth import gen_sine
+from plaintext_daw.models.synthesizer.envelope import ADSR
+from plaintext_daw.models.synthesizer.rawclip import RawClip
+
 import os
+
+from plaintext_daw.models.synthesizer.wave import Wave, Sine
 
 
 def test_convert_mp3():
     if os.path.exists("song.mp3"): os.remove("song.mp3")
-
     sample_rate = 44100
-    signal = gen_sine(65.406, 5, 2, sample_rate)
+    signal = RawClip(Wave([Sine(65.406, 1)]), ADSR(0.1, 0, 1, 0.1), duration=2).render(sample_rate)
     np_to_mp3(signal, sample_rate, "song.mp3")
 
     assert os.path.exists("song.mp3")
