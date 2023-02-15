@@ -22,7 +22,9 @@ class Synthesizer:
     def set_clips(self, config: dict):
         self.__clips = config
 
-    def get_clip(self, note: Note) -> Clip:
+    def get_clip(self, note: Note) -> Clip | None:
+        if note.value not in self.__clips:
+            return None
         clip = self.__pipeline(self.__clips[note.value])
         clip.set_duration(note.length)
         rawdata = clip.render(self.sample_rate)
