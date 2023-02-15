@@ -7,7 +7,7 @@ from .wave import Wave
 
 
 class Envelope:
-    def __call__(self, wave: Wave, duration: float, sample_rate: float):
+    def __call__(self, wave: Wave, duration: float, sample_rate: float) -> np.ndarray:
         raise NotImplementedError
 
 
@@ -25,7 +25,7 @@ class ADSR(Envelope):
         self.sustain_level = sustain_level  # fraction
         self.release = release  # second
 
-    def __call__(self, wave: Wave, duration: float, sample_rate: int):
+    def __call__(self, wave: Wave, duration: float, sample_rate: int) -> np.ndarray:
         # Calculate the length of each stage in samples
         attack_samples = int(self.attack * sample_rate)
         decay_samples = int(self.decay * sample_rate)
