@@ -9,7 +9,7 @@ from plaintext_daw.models.instrument import Instrument, InstrumentSource
 from plaintext_daw.models.note import Note
 from plaintext_daw.models.pattern import Pattern
 from plaintext_daw.models.song import Song
-from plaintext_daw.models.synthesizer.synth import gen_sine
+from plaintext_daw.models.synthesizer import Synthesizer
 
 
 class ResourceManager:
@@ -35,16 +35,10 @@ class ResourceManager:
         return song
 
     def get_clip(self, config):
-        if 'path' in config: # config['type'] == 'wav':
-            # load the binary data (WAV)
-            self.check_types(config, ['path'])
-            data, channels, sample_width, sample_rate = wav_to_np(os.path.join(self.working_dir, config['path']))
-        else: # config['type'] == 'synth':
-            self.check_types(config, ['frequency'])
-            data = gen_sine(config['frequency'], 1, 1, 44100) # TODO/WARNING: hard-coded values, but going to switch to new synth api soon anyway
-            channels = 1
-            sample_width = 2
-            sample_rate = 44100
+        # config['type'] == 'wav':
+        # load the binary data (WAV)
+        self.check_types(config, ['path'])
+        data, channels, sample_rate = wav_to_np(os.path.join(self.working_dir, config['path']))
 
         clip = Clip(
             data=data,
