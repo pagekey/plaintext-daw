@@ -4,6 +4,7 @@
 )]
 
 use std::process::Command;
+use tauri_api::dialog;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -23,11 +24,18 @@ fn syscall_test() -> () {
 
 #[tauri::command]
 fn open_project() -> () {
-    println!("Opening!")
+    println!("Opening!");
+    dialog::message("hi", "title");
 }
 
 pub fn add(a: i32, b: i32) -> i32 {
     return a + b;
+}
+
+#[test]
+fn test_add() {
+    let result = add(2, 3);
+    assert_eq!(result, 5);
 }
 
 fn main() {
@@ -37,10 +45,4 @@ fn main() {
         .invoke_handler(tauri::generate_handler![open_project])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-}
-
-#[test]
-fn test_add() {
-    let result = add(2, 3);
-    assert_eq!(result, 5);
 }
