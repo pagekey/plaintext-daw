@@ -11,6 +11,9 @@ async function greet() {
 async function syscall() {
   await invoke('syscall_test', {});
 }
+async function open_project() {
+  await invoke('open_project', {});
+}
 
 window.addEventListener("DOMContentLoaded", () => {
   greetInputEl = document.querySelector("#greet-input");
@@ -21,4 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector("#syscall-button")
     .addEventListener("click", () => syscall());
+  document
+    .querySelector("#open-project")
+    .addEventListener("click", () => open_project());
 });

@@ -21,6 +21,11 @@ fn syscall_test() -> () {
     ()
 }
 
+#[tauri::command]
+fn open_project() -> () {
+    println!("Opening!")
+}
+
 pub fn add(a: i32, b: i32) -> i32 {
     return a + b;
 }
@@ -29,6 +34,7 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
         .invoke_handler(tauri::generate_handler![syscall_test])
+        .invoke_handler(tauri::generate_handler![open_project])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
