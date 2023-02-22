@@ -25,7 +25,25 @@ fn syscall_test() -> () {
 #[tauri::command]
 fn open_project() -> () {
     println!("Opening!");
-    dialog::message("hi", "title");
+    match dialog::select(Some(""), Some("")) {
+        Ok(resp) => {
+            match resp {
+                dialog::Response::Okay(path) => {
+                    println!("User chose {path}")
+                }
+                dialog::Response::OkayMultiple(paths) => {
+                    println!("Multiple paths: {:?}", paths)
+                }
+                dialog::Response::Cancel => {
+                    println!("Cancel")
+                }
+            }
+            println!("Success file open")
+        }
+        Err(_) => {
+            println!("Open file faild")
+        }
+    }
 }
 
 pub fn add(a: i32, b: i32) -> i32 {
