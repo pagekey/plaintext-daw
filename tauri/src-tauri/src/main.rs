@@ -3,6 +3,8 @@
     windows_subsystem = "windows"
 )]
 
+use std::process::Command;
+
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
@@ -11,6 +13,11 @@ fn greet(name: &str) -> String {
 #[tauri::command]
 fn syscall_test() -> () {
     println!("hello tauri");
+    Command::new("ls")
+        .arg("-l")
+        .arg("-a")
+        .spawn()
+        .expect("ls command failed to start");
     ()
 }
 
