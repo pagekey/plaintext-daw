@@ -29,7 +29,13 @@ fn open_project() -> () {
         Ok(resp) => {
             match resp {
                 dialog::Response::Okay(path) => {
-                    println!("User chose {path}")
+                    println!("User chose {path}");
+                    Command::new("plaintext-daw")
+                        .arg("render")
+                        .arg(path)
+                        .spawn()
+                        .expect("failed to render song");
+                    println!("Rendered song");
                 }
                 dialog::Response::OkayMultiple(paths) => {
                     println!("Multiple paths: {:?}", paths)
