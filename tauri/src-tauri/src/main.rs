@@ -9,7 +9,7 @@ use tauri_api::dialog;
 #[tauri::command]
 fn open_project() -> () {
     println!("Opening!");
-    match dialog::select(Some(""), Some("")) {
+    match dialog::select(Some("yml, yaml"), Some(".")) {
         Ok(resp) => {
             match resp {
                 dialog::Response::Okay(path) => {
