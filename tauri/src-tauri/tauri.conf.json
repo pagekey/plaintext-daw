@@ -59,10 +59,19 @@
     },
     "windows": [
       {
+        "label": "open-project",
         "fullscreen": false,
         "height": 200,
         "resizable": true,
         "title": "plaintext-daw",
+        "width": 600
+      },
+      {
+        "label": "editor",
+        "fullscreen": false,
+        "height": 200,
+        "resizable": true,
+        "title": "plaintext-daw2",
         "width": 600
       }
     ]
