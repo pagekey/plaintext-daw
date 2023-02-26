@@ -6,6 +6,14 @@
 use std::process::Command;
 use tauri_api::dialog;
 
+fn render_song(path: String) {
+    Command::new("plaintext-daw")
+        .arg("render")
+        .arg(path)
+        .spawn()
+        .expect("failed to render song");
+}
+
 #[tauri::command]
 fn open_project(handle: tauri::AppHandle) -> () {
     println!("Opening!");
@@ -13,18 +21,12 @@ fn open_project(handle: tauri::AppHandle) -> () {
         Ok(resp) => {
             match resp {
                 dialog::Response::Okay(path) => {
-                    println!("User chose {path}");
-                    Command::new("plaintext-daw")
-                        .arg("render")
-                        .arg(path)
-                        .spawn()
-                        .expect("failed to render song");
-                    println!("Rendered song");
                     tauri::WindowBuilder::new(
                         &handle,
                         "editor",
                         tauri::WindowUrl::App("index2.html".into())
-                    ).build().unwrap();
+                    ).title("Plaintext DAW Editor")
+                    .build().unwrap();
                 }
                 dialog::Response::OkayMultiple(paths) => {
                     println!("Multiple paths: {:?}", paths)
@@ -33,7 +35,6 @@ fn open_project(handle: tauri::AppHandle) -> () {
                     println!("Cancel")
                 }
             }
-            println!("Success file open")
         }
         Err(_) => {
             println!("Open file failed")

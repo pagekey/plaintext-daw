@@ -5,7 +5,6 @@ async function syscall() {
 }
 async function open_project() {
   await invoke('open_project', {});
-  window.location.href = "index2.html";
 }
 
 window.addEventListener("DOMContentLoaded", () => {
