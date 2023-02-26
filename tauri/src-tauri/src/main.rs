@@ -7,7 +7,7 @@ use std::process::Command;
 use tauri_api::dialog;
 
 #[tauri::command]
-fn open_project() -> () {
+fn open_project(handle: tauri::AppHandle) -> () {
     println!("Opening!");
     match dialog::select(Some("yml, yaml"), Some(".")) {
         Ok(resp) => {
@@ -20,6 +20,11 @@ fn open_project() -> () {
                         .spawn()
                         .expect("failed to render song");
                     println!("Rendered song");
+                    tauri::WindowBuilder::new(
+                        &handle,
+                        "editor",
+                        tauri::WindowUrl::App("index2.html".into())
+                    ).build().unwrap();
                 }
                 dialog::Response::OkayMultiple(paths) => {
                     println!("Multiple paths: {:?}", paths)
