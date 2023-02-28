@@ -30,7 +30,7 @@ def test_synth_get_clip():
     synth = Synthesizer(44100)
     synth.set_clips({"a": {"frequency": 0}})
     synth.set_pipeline(["sin(frequency)", "ADSR(0.1, 0.1, 0.7, 0.1)"])
-    clip = synth.get_clip(Note("a"))
+    clip = synth.get_clip(Note("a"), 100)
 
     assert clip.sample_rate == 44100
     assert clip.channels == 1

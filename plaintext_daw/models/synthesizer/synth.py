@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 import re
 import numpy as np
 import yaml
@@ -22,7 +22,7 @@ class Synthesizer:
     def set_clips(self, config: dict):
         self.__clips = config
 
-    def get_clip(self, note: Note, bpm: int) -> Clip | None:
+    def get_clip(self, note: Note, bpm: int) -> Union[Clip, None]:
         if note.value not in self.__clips:
             return None
         clip = self.__pipeline(self.__clips[note.value])
