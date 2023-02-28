@@ -4,7 +4,7 @@ import numpy as np
 
 from plaintext_daw.cli import cli_entry_point
 from plaintext_daw.lib import np_to_wav
-from plaintext_daw.models.synth import Synth
+from plaintext_daw.models.synthesizer import Synthesizer
 
 
 def test_song1_render_local():

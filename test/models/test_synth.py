@@ -1,55 +1,37 @@
-import numpy as np
-import pytest
+# -*- coding: utf-8 -*-
+# @Time    : 2023/2/15 14:19
+# @Author  : LTstrange
+from plaintext_daw.models import Note
+from plaintext_daw.models.synthesizer import Synthesizer
 
-from plaintext_daw.models.synth import Synth, SynthClip
+
+def test_synth_init():
+    synth = Synthesizer(44100)
+    assert synth.sample_rate == 44100
 
 
-class TestSynth:
-    def test_init(self):
-        instrument = Synth()
-        assert instrument.name is None
-        assert instrument.effects == dict()
-        assert instrument.notes == dict()
+def test_synth_set_clips():
+    synth = Synthesizer(44100)
+    clips = {"a": "b"}
+    synth.set_clips(clips)
 
-    @pytest.mark.skip()
-    def test_read_from_yaml(self):
-        instrument = Synth.read_yaml("test/data/synth.yml")
-        assert instrument.name is not None
-        assert len(instrument.notes) != 0
+    assert synth._Synthesizer__clips == {"a": "b"}
 
-    def test_set_name(self):
-        instrument = Synth()
-        instrument.set_name("abc")
-        assert instrument.name == "abc"
 
-    def test_set_effect(self):
-        effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
-        instrument = Synth()
-        instrument.set_effects(effects)
+def test_synth_set_pipeline():
+    synth = Synthesizer(44100)
+    pipeline = ["sin(frequency)", "ADSR(0.1, 0.1, 0.7, 0.1)"]
+    synth.set_pipeline(pipeline)
 
-        assert instrument.effects == {"Note": (["base", ], ["sin(base, 5)", "fade_in_out(*)"])}
+    assert synth._Synthesizer__effects == ["sin(frequency)", "ADSR(0.1, 0.1, 0.7, 0.1)"]
 
-    def test_set_notes(self):
-        instrument = Synth()
-        # need to define effects before defining notes.
-        effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
-        instrument.set_effects(effects)
 
-        notes = {"C": "Note(65.406)"}
-        instrument.set_notes(notes)
+def test_synth_get_clip():
+    synth = Synthesizer(44100)
+    synth.set_clips({"a": {"frequency": 0}})
+    synth.set_pipeline(["sin(frequency)", "ADSR(0.1, 0.1, 0.7, 0.1)"])
+    clip = synth.get_clip(Note("a"), 100)
 
-        assert instrument.notes == {"C": SynthClip(["65.406"], "Note")}
-
-    def test_render_notes(self):
-        instrument = Synth()
-        effects = {"Note(base)": "sin(base, 5) | fade_in_out(*)"}
-        instrument.set_effects(effects)
-
-        notes = {"C": "Note(65.406)"}
-        instrument.set_notes(notes)
-
-        # need to define effects and notes before rendering
-        note_C = instrument.render_note("C", 2)
-
-        assert len(note_C) == 44100 * 2
-        assert type(note_C) == np.ndarray
+    assert clip.sample_rate == 44100
+    assert clip.channels == 1
+    assert all(clip.data) == 0

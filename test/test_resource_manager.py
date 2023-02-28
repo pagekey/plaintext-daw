@@ -33,10 +33,10 @@ class TestResourceManager:
     @patch.object(ResourceManager, 'get_clip')
     @patch.object(ResourceManager, 'get_instrument')
     @patch.object(ResourceManager, 'get_pattern')
-    def test_get_song(self, mock_get_pattern, mock_get_instrument,mock_get_clip):
+    def test_get_song(self, mock_get_pattern, mock_get_instrument, mock_get_clip):
         with pytest.raises(ValueError):
             self.rm.get_song({'bpm': 100})
-        
+
         clip_dict = {
             'costco': {'pancake': 'wait'},
             'walmart': {'no': 'free samples'},
@@ -72,7 +72,6 @@ class TestResourceManager:
             call(pattern_dict['other']),
         ])
 
-
     def test_get_clip_no_type(self):
         with pytest.raises(ValueError):
             self.rm.get_clip({})
@@ -90,33 +89,9 @@ class TestResourceManager:
         assert isinstance(clip, Clip)
         assert isinstance(clip.data, np.ndarray)
         assert clip.channels == 1
-        assert clip.sample_width == 2
         assert clip.sample_rate == 44100
 
         # Missing fields
-
-    def test_get_clip_synth(self):
-        # Good config
-        config = {
-            'type': 'synth',
-            'frequency': 16.35,
-            'sample_rate': 44100, # TODO use non-hard-coded sample rate
-            'length': 1, # TODO use non-hard-coded length
-        }
-        clip = self.rm.get_clip(config)
-        assert isinstance(clip, Clip)
-        assert isinstance(clip.data, np.ndarray)
-        assert len(clip.data) == 44100 * 1 # sample_rate * length
-        assert clip.channels == 1
-        assert clip.sample_width == 2
-        assert clip.sample_rate == 44100
-
-        # Missing fields
-        for missing_field in ['frequency']:#, 'sample_rate', 'length']:
-            bad_cfg = config.copy()
-            del bad_cfg[missing_field]
-            with pytest.raises(ValueError):
-                self.rm.get_clip(bad_cfg)
 
     @patch.object(ResourceManager, 'get_clip')
     def test_get_instrument(self, mock_get_clip):
@@ -126,6 +101,7 @@ class TestResourceManager:
         }
         instrument = self.rm.get_instrument({
             'clips': clips_dict,
+            'type': 'wav'
         })
         assert isinstance(instrument, Instrument)
         assert instrument.source == InstrumentSource.IN_PLACE
