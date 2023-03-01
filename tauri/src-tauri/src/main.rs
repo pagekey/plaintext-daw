@@ -4,7 +4,11 @@
 )]
 
 use std::process::Command;
+use std::sync::Mutex;
+use tauri::State;
 use tauri_api::dialog;
+
+struct Filepath(Mutex<String>);
 
 fn render_song(path: String) {
     Command::new("plaintext-daw")
@@ -15,12 +19,15 @@ fn render_song(path: String) {
 }
 
 #[tauri::command]
-fn open_project(handle: tauri::AppHandle) -> () {
-    println!("Opening!");
+fn open_project(handle: tauri::AppHandle, filepath: State<Filepath>) -> () {
     match dialog::select(Some("yml, yaml"), Some(".")) {
         Ok(resp) => {
             match resp {
                 dialog::Response::Okay(path) => {
+                    let mut pth = filepath.0.lock().unwrap();
+                    println!("old path: {pth}");
+                    *pth = path;
+                    println!("Set new path {pth}");
                     tauri::WindowBuilder::new(
                         &handle,
                         "editor",
@@ -42,9 +49,21 @@ fn open_project(handle: tauri::AppHandle) -> () {
     }
 }
 
+#[tauri::command]
+fn get_filepath(handle: tauri::AppHandle, filepath: State<Filepath>) -> String {
+    let fpath = filepath.0.lock().unwrap();
+    let result = (*fpath).clone();
+    println!("Got result: {result}");
+    result
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![open_project])
+        .manage(Filepath(Default::default()))
+        .invoke_handler(tauri::generate_handler![
+            get_filepath,
+            open_project,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
