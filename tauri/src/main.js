@@ -4,7 +4,9 @@ async function syscall() {
   await invoke('syscall_test', {});
 }
 async function open_project() {
-  await invoke('open_project', {});
+  await invoke('open_project', {}).then((resp) => {
+    close();
+  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
