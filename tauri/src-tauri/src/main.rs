@@ -8,7 +8,9 @@ use std::sync::Mutex;
 use tauri::State;
 use tauri_api::dialog;
 
-struct Filepath(Mutex<String>);
+mod state;
+
+struct AppState(Mutex<state::App>);
 
 fn render_song(path: String) {
     Command::new("plaintext-daw")
@@ -19,15 +21,17 @@ fn render_song(path: String) {
 }
 
 #[tauri::command]
-fn open_project(handle: tauri::AppHandle, filepath: State<Filepath>) -> () {
+fn open_project(handle: tauri::AppHandle, app_state: State<AppState>) -> () {
     match dialog::select(Some("yml, yaml"), Some(".")) {
         Ok(resp) => {
             match resp {
                 dialog::Response::Okay(path) => {
-                    let mut pth = filepath.0.lock().unwrap();
+                    let mut app_state_ref = app_state.0.lock().unwrap();
+                    let pth = &(*app_state_ref).filepath;
                     println!("old path: {pth}");
-                    *pth = path;
-                    println!("Set new path {pth}");
+                    (*app_state_ref).filepath = path;
+                    let path = &(*app_state_ref).filepath;
+                    println!("Set new path {path}");
                     tauri::WindowBuilder::new(
                         &handle,
                         "editor",
@@ -50,16 +54,16 @@ fn open_project(handle: tauri::AppHandle, filepath: State<Filepath>) -> () {
 }
 
 #[tauri::command]
-fn get_filepath(handle: tauri::AppHandle, filepath: State<Filepath>) -> String {
+fn get_filepath(handle: tauri::AppHandle, filepath: State<AppState>) -> String {
     let fpath = filepath.0.lock().unwrap();
-    let result = (*fpath).clone();
+    let result = (*fpath).clone().filepath;
     println!("Got result: {result}");
     result
 }
 
 fn main() {
     tauri::Builder::default()
-        .manage(Filepath(Default::default()))
+        .manage(AppState(Default::default()))
         .invoke_handler(tauri::generate_handler![
             get_filepath,
             open_project,
