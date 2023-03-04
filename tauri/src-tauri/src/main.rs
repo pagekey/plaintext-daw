@@ -32,6 +32,7 @@ fn open_project(handle: tauri::AppHandle, app_state: State<AppState>) -> () {
                     println!("old path: {pth}");
                     (*app_state_ref).filepath = path.clone();
                     (*app_state_ref).contents = fs::read_to_string(path).expect("could not read {path}");
+                    (*app_state_ref).song = serde_yaml::from_str(&(*app_state_ref).contents).unwrap();
                     let path = &(*app_state_ref).filepath;
                     println!("Set new path {path}");
                     tauri::WindowBuilder::new(
