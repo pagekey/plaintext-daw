@@ -2,9 +2,8 @@ const { invoke } = window.__TAURI__.tauri;
 
 
 window.addEventListener("DOMContentLoaded", async () => {
-    console.log('calling get_filepath');
-    invoke('get_filepath').then((fpath) => {
+    invoke('get_app').then((app) => {
         document
-            .querySelector("#current_project").innerHTML = fpath;
+            .querySelector("#current_project").innerHTML = `filepath: ${app.filepath}\n\n\ncontents:: ${app.contents}`;
     });
 });

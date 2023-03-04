@@ -3,6 +3,7 @@
     windows_subsystem = "windows"
 )]
 
+use std::fs;
 use std::process::Command;
 use std::sync::Mutex;
 use tauri::State;
@@ -29,7 +30,8 @@ fn open_project(handle: tauri::AppHandle, app_state: State<AppState>) -> () {
                     let mut app_state_ref = app_state.0.lock().unwrap();
                     let pth = &(*app_state_ref).filepath;
                     println!("old path: {pth}");
-                    (*app_state_ref).filepath = path;
+                    (*app_state_ref).filepath = path.clone();
+                    (*app_state_ref).contents = fs::read_to_string(path).expect("could not read {path}");
                     let path = &(*app_state_ref).filepath;
                     println!("Set new path {path}");
                     tauri::WindowBuilder::new(
@@ -54,10 +56,9 @@ fn open_project(handle: tauri::AppHandle, app_state: State<AppState>) -> () {
 }
 
 #[tauri::command]
-fn get_filepath(handle: tauri::AppHandle, filepath: State<AppState>) -> String {
+fn get_app(handle: tauri::AppHandle, filepath: State<AppState>) -> state::App {
     let fpath = filepath.0.lock().unwrap();
-    let result = (*fpath).clone().filepath;
-    println!("Got result: {result}");
+    let result = (*fpath).clone();
     result
 }
 
@@ -65,7 +66,7 @@ fn main() {
     tauri::Builder::default()
         .manage(AppState(Default::default()))
         .invoke_handler(tauri::generate_handler![
-            get_filepath,
+            get_app,
             open_project,
         ])
         .run(tauri::generate_context!())
