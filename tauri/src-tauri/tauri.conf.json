@@ -13,7 +13,7 @@
   "tauri": {
     "allowlist": {
       "all": false,
-      "shell": {
+      "dialog": {
         "all": false,
         "open": true
       }
@@ -59,11 +59,12 @@
     },
     "windows": [
       {
+        "label": "open-project",
         "fullscreen": false,
-        "height": 600,
+        "height": 200,
         "resizable": true,
         "title": "plaintext-daw",
-        "width": 800
+        "width": 600
       }
     ]
   }

@@ -4,69 +4,58 @@
 )]
 
 use std::process::Command;
-use tauri_api::dialog;
+use std::sync::{Arc, Mutex};
+use tauri::api::dialog;
+use tauri::{Manager, State};
 
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+mod state;
 
-#[tauri::command]
-fn syscall_test() -> () {
-    println!("hello tauri");
-    Command::new("ls")
-        .arg("-l")
-        .arg("-a")
+struct AppState(Arc<Mutex<state::App>>);
+
+fn render_song(path: String) {
+    Command::new("plaintext-daw")
+        .arg("render")
+        .arg(path)
         .spawn()
-        .expect("ls command failed to start");
-    ()
+        .expect("failed to render song");
 }
 
 #[tauri::command]
-fn open_project() -> () {
-    println!("Opening!");
-    match dialog::select(Some(""), Some("")) {
-        Ok(resp) => {
-            match resp {
-                dialog::Response::Okay(path) => {
-                    println!("User chose {path}");
-                    Command::new("plaintext-daw")
-                        .arg("render")
-                        .arg(path)
-                        .spawn()
-                        .expect("failed to render song");
-                    println!("Rendered song");
-                }
-                dialog::Response::OkayMultiple(paths) => {
-                    println!("Multiple paths: {:?}", paths)
-                }
-                dialog::Response::Cancel => {
-                    println!("Cancel")
-                }
+fn open_project(handle: tauri::AppHandle, app_state: State<AppState>) {
+    let app_state = app_state.0.clone();
+    dialog::FileDialogBuilder::new()
+        .add_filter("Yaml", &["yml", "yaml"])
+        .pick_file(move |file_path| {
+            if let Some(path) = file_path {
+                app_state.lock().unwrap().filepath = path.to_str().unwrap().to_string();
+                tauri::WindowBuilder::new(
+                    &handle,
+                    "editor",
+                    tauri::WindowUrl::App("index2.html".into()),
+                )
+                .title("Plaintext DAW Editor")
+                .build()
+                .unwrap();
+                handle
+                    .get_window("open-project")
+                    .unwrap()
+                    .close()
+                    .expect("Unable to close window");
             }
-            println!("Success file open")
-        }
-        Err(_) => {
-            println!("Open file faild")
-        }
-    }
+        });
 }
 
-pub fn add(a: i32, b: i32) -> i32 {
-    return a + b;
-}
-
-#[test]
-fn test_add() {
-    let result = add(2, 3);
-    assert_eq!(result, 5);
+#[tauri::command]
+fn get_app(handle: tauri::AppHandle, filepath: State<AppState>) -> state::App {
+    let fpath = filepath.0.lock().unwrap();
+    let result = (*fpath).clone();
+    result
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
-        .invoke_handler(tauri::generate_handler![syscall_test])
-        .invoke_handler(tauri::generate_handler![open_project])
+        .manage(AppState(Default::default()))
+        .invoke_handler(tauri::generate_handler![get_app, open_project,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
